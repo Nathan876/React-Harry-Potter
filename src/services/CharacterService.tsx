@@ -8,7 +8,7 @@ export async function getCharacters (): Promise<ResponseApi> {
   return await res.json()
 }
 
-export async function getCharactersByHouse (house: House, page?: number): Promise<ResponseApi> {
-  const res = await fetch(url + `?filter[house_eq]=${house}${page ? `&page[number]=${page}` : ''}`)
+export async function getCharactersByHouse (house: House | undefined, page?: number): Promise<ResponseApi> {
+  const res = await fetch(url + `?filter[born_not_null]=true&filter[hair_color_not_null]=true&filter[blood_status_not_null]=true&${house? `filter[house_eq]=${house}`: ''}${page ? `&page[number]=${page}` : ''}`)
   return await res.json()
 }
