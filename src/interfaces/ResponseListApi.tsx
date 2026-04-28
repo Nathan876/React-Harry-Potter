@@ -1,7 +1,7 @@
 import type DataItem from './DataItem.tsx'
 import type { Meta } from './Meta.tsx'
 
-export default interface ResponseApi {
-  data: DataItem
+export default interface ResponseListApi {
+  data: DataItem[]
   meta: Meta
 }

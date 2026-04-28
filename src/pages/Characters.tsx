@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
-import type ResponseApi from '../interfaces/ResponseApi.tsx'
+import type ResponseListApi from '../interfaces/ResponseListApi.tsx'
 import { getCharactersByHouse } from '../services/CharacterService.tsx'
-import type Character from '../interfaces/Character.tsx'
 import { House } from '../Enums/HouseEnum.tsx'
 import CharacterCard from '../components/cards/CharacterCard.tsx'
 import Button from '../components/Button.tsx'
 
 function Characters () {
-  const [data, setData] = useState<ResponseApi>()
+  const [data, setData] = useState<ResponseListApi>()
   const [selectHouse, setSelectHouse] = useState<House | undefined>(undefined)
   const [page, setPage] = useState<number>(1)
 
@@ -37,9 +36,8 @@ function Characters () {
       </select>
       <div className="grid grid-cols-5 gap-4">
         {data?.data.map((dataItem) => {
-            const character = dataItem.attributes as Character
             return (
-              <CharacterCard key={character.slug} character={character}/>
+              <CharacterCard key={dataItem.id} data={dataItem}/>
             )
           }
         )}
