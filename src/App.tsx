@@ -3,6 +3,7 @@ import Header from './components/Header.tsx'
 import { Route, Routes } from 'react-router'
 import Characters from './pages/Characters.tsx'
 import Home from './pages/Home.tsx'
+import CharacterPage from './pages/CharacterPage.tsx'
 
 function App () {
   return (
@@ -10,7 +11,8 @@ function App () {
       <Header/>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/characters" element={<Characters/>}/>
+        <Route path="/character" element={<Characters/>}/>
+        <Route path="/character/:id" element={<CharacterPage/>}/>
       </Routes>
     </>
   )

@@ -3,7 +3,7 @@ import type Movie from './Movie.tsx'
 import type Potion from './Potion.tsx'
 import type Spell from './Spell.tsx'
 
-export default interface Data {
+export default interface DataItem {
   id: number
   attributes: Character | Movie | Potion | Spell
   type: string;

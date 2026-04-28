@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 
 export default function Header () {
   const links = [
-    { label: 'Characters', href: '/characters' }
+    { label: 'Characters', href: '/character' }
   ]
 
   return (
