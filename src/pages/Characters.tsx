@@ -3,7 +3,7 @@ import '../App.css'
 import type ResponseApi from '../interfaces/ResponseApi.tsx'
 import { getCharactersByHouse } from '../services/CharacterService.tsx'
 import type Character from '../interfaces/Character.tsx'
-import { House } from '../Enums/HouseEnum.tsx'
+import { House } from '../enums/HouseEnum.tsx'
 import CharacterCard from '../components/cards/CharacterCard.tsx'
 import Button from '../components/Button.tsx'
 
@@ -44,11 +44,11 @@ function Characters () {
           }
         )}
       </div>
-      {Array.from({ length: data?.meta?.pagination?.last || data?.meta?.pagination?.current }).map((_, i) => (
-        <Button key={i} onClick={() => handlePagination(i+1)}>
-          {i + 1}
-        </Button>
-      ))}
+      {Array.from({ length: data?.meta?.pagination?.last || data?.meta?.pagination?.current || 0 }).map((_, i) => (
+          <Button key={i} onClick={() => handlePagination(i+1)}>
+            {i + 1}
+          </Button>
+      ))} -m
     </>
   )
 }

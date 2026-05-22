@@ -1,5 +1,5 @@
 import type ResponseApi from '../interfaces/ResponseApi.tsx'
-import type { House } from '../Enums/HouseEnum.tsx'
+import type { House } from '../enums/HouseEnum.tsx'
 
 export const url = 'https://api.potterdb.com/v1/characters'
 
