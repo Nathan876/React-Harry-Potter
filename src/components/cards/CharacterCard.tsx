@@ -1,12 +1,17 @@
+import { Link } from 'react-router'
+import type DataItem from '../../interfaces/DataItem.tsx'
 import type Character from '../../interfaces/Character.tsx'
 
 interface CharacterCardProps {
-  character: Character;
+  data: DataItem;
 }
 
-export function CharacterCard({ character }: CharacterCardProps) {
+export function CharacterCard ({ data }: CharacterCardProps) {
+  const character = data.attributes as Character
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col">
+    <Link to={`/character/${data.id}`}
+          className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col">
 
       <div className="h-64 w-full bg-gray-100">
         <img
@@ -23,8 +28,8 @@ export function CharacterCard({ character }: CharacterCardProps) {
         </h3>
       </div>
 
-    </div>
-  );
+    </Link>
+  )
 }
 
-export default CharacterCard;
+export default CharacterCard

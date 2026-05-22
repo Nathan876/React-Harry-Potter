@@ -3,6 +3,7 @@ import Header from './components/Header.tsx'
 import { Route, Routes } from 'react-router'
 import Characters from './pages/Characters.tsx'
 import Home from './pages/Home.tsx'
+import CharacterPage from './pages/CharacterPage.tsx'
 import {useTheme} from "./hooks/useTheme.tsx";
 
 function App () {
@@ -32,6 +33,7 @@ function App () {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/characters" element={<Characters/>}/>
+                <Route path="/character/:id" element={<CharacterPage/>}/>
             </Routes>
         </main>
     </div>

@@ -9,7 +9,7 @@ export default interface Character {
   born: string
   died: string
   eye_color: string
-  family_member: string[]
+  family_members: string[]
   gender: string
   hair_color: string
   height: string
