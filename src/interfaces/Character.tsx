@@ -1,4 +1,4 @@
-import type { House } from '../Enums/HouseEnum.tsx'
+import type { House } from '../enums/HouseEnum.tsx'
 
 export default interface Character {
   id: string
