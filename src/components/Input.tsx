@@ -1,6 +1,3 @@
-import { useTheme } from "../hooks/useTheme.tsx";
-import type { Theme } from "../contexts/ThemeContext.tsx";
-
 interface propsInput {
     label: string;
     id: string;
