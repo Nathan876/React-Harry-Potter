@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { getCharactersForAutocomplete } from '../services/CharacterService.tsx'
 import type ResponseListApi from '../interfaces/ResponseListApi.tsx'
 
-interface PropsInput {
+interface PropsAutocompleteCharacter {
   label: string;
   id: string;
   placeholder?: string;
@@ -13,7 +13,7 @@ interface PropsInput {
   onSelect: (character: Character) => void;
 }
 
-function AutocompleteCharacter (props: PropsInput) {
+function AutocompleteCharacter (props: PropsAutocompleteCharacter) {
   const { theme } = useTheme()
   const [input, setInput] = useState('')
   const [autocompleteItems, setAutocompleteItems] = useState<Character[]>([])
