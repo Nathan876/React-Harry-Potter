@@ -8,6 +8,8 @@ export function Home () {
   const { dailyCharacter, isLoading, error } = useDailyCharacter()
   const [lastCharacter, setLastCharacter] = useState<Character | null>(null)
   const currentCharacter = dailyCharacter?.attributes as Character | undefined
+  const [lastCharacters, setLastCharacters] = useState<Character []>([])
+
   const isVictory = Boolean(
       lastCharacter &&
       currentCharacter &&
@@ -19,6 +21,7 @@ export function Home () {
     console.log('Personnage du jour :', dailyCharacter)
     console.log('Personnage selectionner ', character)
     setLastCharacter(character)
+    lastCharacters.push(character)
   }
 
   return (
@@ -44,13 +47,6 @@ export function Home () {
             />
         )}
 
-      {lastCharacter !== null && (
-        <Comparator
-          lastCharacter={lastCharacter}
-          currentCharacter={dailyCharacter?.attributes as Character}
-        />
-      )}
-
         {isVictory && (
             <div className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
                 <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
@@ -59,6 +55,10 @@ export function Home () {
                 </p>
             </div>
         )}
+
+      {lastCharacters?.length > 0 && lastCharacters.toReversed().map( character => (
+        <Comparator lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></Comparator>
+      ))}
 
 
     </div>
