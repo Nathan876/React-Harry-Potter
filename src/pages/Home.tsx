@@ -3,17 +3,18 @@ import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
 import { useState } from 'react'
 import Comparator from '../components/Comparator.tsx'
+import Helper from '../components/Helper.tsx'
 
 export function Home () {
   const { dailyCharacter, isLoading, error } = useDailyCharacter()
   const [lastCharacter, setLastCharacter] = useState<Character | null>(null)
-  const currentCharacter = dailyCharacter?.attributes as Character | undefined
   const [lastCharacters, setLastCharacters] = useState<Character []>([])
+  const currentCharacter = dailyCharacter?.attributes as Character | undefined
 
   const isVictory = Boolean(
-      lastCharacter &&
-      currentCharacter &&
-      lastCharacter.name === currentCharacter.name
+    lastCharacter &&
+    currentCharacter &&
+    lastCharacter.name === currentCharacter.name
   )
 
 
@@ -38,27 +39,29 @@ export function Home () {
           </p>
         )}
       </div>
-
         {!isVictory && (
-            <AutocompleteCharacter
-                label="Chercher un sorcier"
-                id="search"
-                onSelect={(character: Character) => handleSelecteCharacter(character)}
-            />
+          <AutocompleteCharacter
+            label="Chercher un sorcier"
+            id="search"
+            onSelect={(character: Character) => handleSelecteCharacter(character)}
+          />
         )}
 
         {isVictory && (
-            <div className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
-                <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
-                <p className="text-green-800 text-lg">
-                    Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
-                </p>
-            </div>
+          <div
+            className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
+            <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
+            <p className="text-green-800 text-lg">
+              Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
+            </p>
+          </div>
         )}
 
-      {lastCharacters?.length > 0 && lastCharacters.toReversed().map( character => (
-        <Comparator lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></Comparator>
-      ))}
+      <Helper currentCharacter={dailyCharacter?.attributes as Character}></Helper>
+
+        {lastCharacters?.length > 0 && lastCharacters.toReversed().map(character => (
+          <Comparator lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></Comparator>
+        ))}
 
 
     </div>
