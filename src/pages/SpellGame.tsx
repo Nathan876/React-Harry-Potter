@@ -1,5 +1,5 @@
 import { useDailySpell } from '../hooks/useDailySpell.tsx'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import type Spell from '../interfaces/Spell.tsx'
 import HelperSpell from '../components/spell/HelperSpell.tsx'
 import ComparatorSpell from '../components/spell/ComparatorSpell.tsx'
@@ -8,9 +8,21 @@ import Autocomplete from '../components/Autocomplete.tsx'
 
 export function SpellGame () {
   const { dailySpell, isLoading, error } = useDailySpell()
-  const [lastSpell, setLastSpell] = useState<Spell | null>(null)
-  const [lastSpells, setLastSpells] = useState<Spell []>([])
+  const [lastSpells, setLastSpells] = useState<Spell []>(()=>{
+    const savedHistory = localStorage.getItem('hp-spells-history')
+    if (savedHistory) {
+      return JSON.parse(savedHistory)
+    } else {
+      return []
+    }
+  })
+
+  const lastSpell = lastSpells.length > 0 ? lastSpells[lastSpells.length - 1] : null
   const currentSpell = dailySpell?.attributes as Spell | undefined
+
+  useEffect(() => {
+    localStorage.setItem('hp-spells-history', JSON.stringify(lastSpells))
+  }, [lastSpells]);
 
   const isVictory = Boolean(
     lastSpell &&
@@ -18,11 +30,10 @@ export function SpellGame () {
     lastSpell.name === currentSpell.name
   )
 
-  async function handleSelecteSpell (Spell: Spell) {
-    console.log('Personnage du jour :', dailySpell)
-    console.log('Personnage selectionner ', Spell)
-    setLastSpell(Spell)
-    lastSpells.push(Spell)
+  async function handleSelecteSpell (spell: Spell) {
+    console.log('Sort du jour :', dailySpell)
+    console.log('Sort selectionner ', spell)
+    setLastSpells(prev => [...prev, spell])
   }
 
   return (
@@ -60,8 +71,8 @@ export function SpellGame () {
 
       <HelperSpell currentSpell={dailySpell?.attributes as Spell}></HelperSpell>
 
-      {lastSpells?.length > 0 && lastSpells.toReversed().map(Spell => (
-        <ComparatorSpell lastSpell={Spell} currentSpell={dailySpell?.attributes as Spell}></ComparatorSpell>
+      {lastSpells?.length > 0 && lastSpells.toReversed().map((Spell, index) => (
+        <ComparatorSpell key={`${Spell.id}-${index}`} lastSpell={Spell} currentSpell={dailySpell?.attributes as Spell}></ComparatorSpell>
       ))}
 
 
