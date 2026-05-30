@@ -1,11 +1,11 @@
-import type Character from '../interfaces/Character.tsx'
+import type Character from '../../interfaces/Character.tsx'
 
-interface PropsComporator {
+interface PropsComporatorCharacter {
   lastCharacter: Character
   currentCharacter: Character
 }
 
-function Comparator (props: PropsComporator) {
+function ComparatorCharacter (props: PropsComporatorCharacter) {
   const headerClass = 'text-xs font-semibold text-gray-500 uppercase tracking-wider'
   const getMatchClass = (currentValue: string, lastValue: string) => {
     return currentValue === lastValue
@@ -51,4 +51,4 @@ function Comparator (props: PropsComporator) {
     </div>)
 }
 
-export default Comparator
+export default ComparatorCharacter

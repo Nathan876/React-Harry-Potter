@@ -1,8 +1,9 @@
 import './App.css'
 import Header from './components/Header.tsx'
-import { Route, Routes } from 'react-router'
-import Home from './pages/Home.tsx'
+import { Navigate, Route, Routes } from 'react-router'
 import {useTheme} from "./hooks/useTheme.tsx";
+import CharacterGame from './pages/CharacterGame.tsx'
+import SpellGame from './pages/SpellGame.tsx'
 
 function App () {
     const { theme } = useTheme()
@@ -29,8 +30,10 @@ function App () {
         <Header/>
         <main className="p-4">
             <Routes>
-                <Route path="/" element={<Home/>}/>
-           </Routes>
+                <Route path="/" element={<Navigate to="/character" replace />} />
+                <Route path="/character" element={<CharacterGame/>}/>
+                <Route path="/spell" element={<SpellGame/>}/>
+            </Routes>
         </main>
     </div>
 )

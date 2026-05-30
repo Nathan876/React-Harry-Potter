@@ -1,27 +1,32 @@
-import { useTheme } from '../hooks/useTheme.tsx'
 import type { Theme } from '../contexts/ThemeContext.tsx'
 import type Character from '../interfaces/Character.tsx'
+import type Spell from '../interfaces/Spell.tsx'
+import type Potion from '../interfaces/Potion.tsx'
+import { useTheme } from '../hooks/useTheme.tsx'
 import { useState } from 'react'
 import { getCharactersForAutocomplete } from '../services/CharacterService.tsx'
 import type ResponseListApi from '../interfaces/ResponseListApi.tsx'
+import { getSpellsForAutocomplete } from '../services/SpellService.tsx'
+import { getPotionsForAutocomplete } from '../services/PotionService.tsx'
 
-interface PropsAutocompleteCharacter {
+
+interface PropsAutocomplete {
   label: string;
   id: string;
   placeholder?: string;
-  type?: string;
-  onSelect: (character: Character) => void;
+  type: string;
+  onSelect: (item: Character | Spell | Potion) => void;
 }
 
-function AutocompleteCharacter (props: PropsAutocompleteCharacter) {
+function Autocomplete (props: PropsAutocomplete) {
   const { theme } = useTheme()
   const [input, setInput] = useState('')
-  const [autocompleteItems, setAutocompleteItems] = useState<Character[]>([])
+  const [autocompleteItems, setAutocompleteItems] = useState<Character[] | Spell[] | Potion[]>([])
 
-  function handleAutocompleteSelect (character: Character) {
-    setInput(character.name)
+  function handleAutocompleteSelect (item: Character | Spell | Potion) {
+    setInput(item.name)
     setAutocompleteItems([])
-    props.onSelect(character)
+    props.onSelect(item)
   }
 
   async function handleInputChange (event: React.ChangeEvent<HTMLInputElement>) {
@@ -33,14 +38,32 @@ function AutocompleteCharacter (props: PropsAutocompleteCharacter) {
       return
     }
 
-    const data = await getCharactersForAutocomplete(value)
-    const items = getAutocompletItem(data)
-    setAutocompleteItems(items)
+    let data = null
+    switch (props.type) {
+      case 'spell':
+        data = await getSpellsForAutocomplete(value)
+        break
+      case 'potion':
+        data = await getPotionsForAutocomplete(value)
+        break
+      case 'character':
+        data = await getCharactersForAutocomplete(value)
+        break
+    }
+    const items = getAutocompleteItems(data!)
+    setAutocompleteItems(items!)
   }
 
-  function getAutocompletItem (data: ResponseListApi): Character[] {
+  function getAutocompleteItems (data: ResponseListApi): Character[] | Spell[] | Potion[] | undefined {
     if (!data || !data.data) return []
-    return data.data.map((item) => item.attributes as Character)
+    switch (props.type) {
+      case 'spell':
+        return data.data.map((item) => item.attributes as Spell)
+      case 'potion':
+        return data.data.map((item) => item.attributes as Potion)
+      case 'character':
+        return data.data.map((item) => item.attributes as Character)
+    }
   }
 
 
@@ -123,4 +146,4 @@ function AutocompleteCharacter (props: PropsAutocompleteCharacter) {
   )
 }
 
-export default AutocompleteCharacter
+export default Autocomplete

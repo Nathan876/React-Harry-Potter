@@ -1,11 +1,12 @@
-import AutocompleteCharacter from '../components/AutocompleteCharacter.tsx'
 import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
-import {useEffect, useState} from 'react'
-import Comparator from '../components/Comparator.tsx'
-import Helper from '../components/Helper.tsx'
+import { useState, useEffect } from 'react'
+import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
+import HelperCharacter from '../components/character/HelperCharacter.tsx'
+import { getQtySpells } from '../services/SpellService.tsx'
+import Autocomplete from '../components/Autocomplete.tsx'
 
-export function Home () {
+export function CharacterGame () {
   const { dailyCharacter, isLoading, error } = useDailyCharacter()
   const [lastCharacters, setLastCharacters] = useState<Character []>(()=> {
     const savedHistory = localStorage.getItem('hp-history')
@@ -27,7 +28,6 @@ export function Home () {
     currentCharacter &&
     lastCharacter.name === currentCharacter.name
   )
-
 
   async function handleSelecteCharacter (character: Character) {
     console.log('Personnage du jour :', dailyCharacter)
@@ -51,10 +51,11 @@ export function Home () {
         )}
       </div>
         {!isVictory && (
-          <AutocompleteCharacter
-            label="Chercher un sorcier"
+          <Autocomplete
+            label="Search a wizard"
             id="search"
-            onSelect={(character: Character) => handleSelecteCharacter(character)}
+            type="character"
+            onSelect={(character) => handleSelecteCharacter(character  as Character) }
           />
         )}
 
@@ -68,10 +69,10 @@ export function Home () {
           </div>
         )}
 
-      <Helper currentCharacter={dailyCharacter?.attributes as Character}></Helper>
+      <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character}></HelperCharacter>
 
         {lastCharacters?.length > 0 && lastCharacters.toReversed().map((character, index) => (
-          <Comparator key={`${character.id}-${index}`}  lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></Comparator>
+          <ComparatorCharacter key={`${character.id}-${index}`}  lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></ComparatorCharacter>
         ))}
 
 
@@ -79,4 +80,4 @@ export function Home () {
   )
 }
 
-export default Home
+export default CharacterGame
