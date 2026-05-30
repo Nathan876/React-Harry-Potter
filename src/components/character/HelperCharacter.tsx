@@ -1,12 +1,12 @@
-import type Character from '../interfaces/Character.tsx'
-import Button from './Button.tsx'
+import type Character from '../../interfaces/Character.tsx'
+import Button from '../Button.tsx'
 import { useEffect, useState } from 'react'
 
-interface PropsHelper {
+interface PropsHelperCharacter {
   currentCharacter: Character
 }
 
-function Helper(props: PropsHelper) {
+function HelperCharacter(props: PropsHelperCharacter) {
   const [helper, setHelper] = useState<string[]>([])
   const [helpIndex, setHelpIndex] = useState(0)
 
@@ -82,4 +82,4 @@ function Helper(props: PropsHelper) {
   )
 }
 
-export default Helper
+export default HelperCharacter
