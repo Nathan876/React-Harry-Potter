@@ -1,15 +1,26 @@
 import AutocompleteCharacter from '../components/AutocompleteCharacter.tsx'
 import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import Comparator from '../components/Comparator.tsx'
 import Helper from '../components/Helper.tsx'
 
 export function Home () {
   const { dailyCharacter, isLoading, error } = useDailyCharacter()
-  const [lastCharacter, setLastCharacter] = useState<Character | null>(null)
-  const [lastCharacters, setLastCharacters] = useState<Character []>([])
+  const [lastCharacters, setLastCharacters] = useState<Character []>(()=> {
+    const savedHistory = localStorage.getItem('hp-history')
+    if (savedHistory) {
+      return JSON.parse(savedHistory)
+    } else {
+      return []
+    }
+  })
+  const lastCharacter = lastCharacters.length > 0 ? lastCharacters[lastCharacters.length -1] : null
   const currentCharacter = dailyCharacter?.attributes as Character | undefined
+
+  useEffect(() => {
+    localStorage.setItem('hp-history', JSON.stringify(lastCharacters))
+  }, [lastCharacters])
 
   const isVictory = Boolean(
     lastCharacter &&
@@ -21,8 +32,8 @@ export function Home () {
   async function handleSelecteCharacter (character: Character) {
     console.log('Personnage du jour :', dailyCharacter)
     console.log('Personnage selectionner ', character)
-    setLastCharacter(character)
-    lastCharacters.push(character)
+    setLastCharacters(prev => [...prev, character])
+
   }
 
   return (
@@ -59,8 +70,8 @@ export function Home () {
 
       <Helper currentCharacter={dailyCharacter?.attributes as Character}></Helper>
 
-        {lastCharacters?.length > 0 && lastCharacters.toReversed().map(character => (
-          <Comparator lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></Comparator>
+        {lastCharacters?.length > 0 && lastCharacters.toReversed().map((character, index) => (
+          <Comparator key={`${character.id}-${index}`}  lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></Comparator>
         ))}
 
 
