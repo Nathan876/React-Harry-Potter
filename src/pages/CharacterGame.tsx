@@ -19,12 +19,8 @@ export function CharacterGame () {
   )
 
   async function handleSelecteCharacter (character: Character) {
-    console.log('Personnage du jour :', dailyCharacter)
-    console.log('Personnage selectionner ', character)
     setLastCharacter(character)
     lastCharacters.push(character)
-    const test = await getQtySpells()
-    console.log(test)
   }
 
   return (
@@ -37,7 +33,6 @@ export function CharacterGame () {
           <p className="text-red-500">{error}</p>
         ) : (
           <p className="text-green-600 font-bold text-2xl">
-            {(dailyCharacter?.attributes as Character).name}
           </p>
         )}
       </div>
