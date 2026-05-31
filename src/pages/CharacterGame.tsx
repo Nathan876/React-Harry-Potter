@@ -1,27 +1,15 @@
 import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
-import { useState, useEffect } from 'react'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
-import { getQtySpells } from '../services/SpellService.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
+import {useLocalStorage} from "../hooks/useLocalStorage.ts";
 
 export function CharacterGame () {
   const { dailyCharacter, isLoading, error } = useDailyCharacter()
-  const [lastCharacters, setLastCharacters] = useState<Character []>(()=> {
-    const savedHistory = localStorage.getItem('hp-history')
-    if (savedHistory) {
-      return JSON.parse(savedHistory)
-    } else {
-      return []
-    }
-  })
+  const [lastCharacters, setLastCharacters] = useLocalStorage<Character[]>('hp-character-history', [])
   const lastCharacter = lastCharacters.length > 0 ? lastCharacters[lastCharacters.length -1] : null
   const currentCharacter = dailyCharacter?.attributes as Character | undefined
-
-  useEffect(() => {
-    localStorage.setItem('hp-history', JSON.stringify(lastCharacters))
-  }, [lastCharacters])
 
   const isVictory = Boolean(
     lastCharacter &&

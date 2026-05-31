@@ -1,28 +1,18 @@
 import { useDailySpell } from '../hooks/useDailySpell.tsx'
-import {useEffect, useState} from 'react'
 import type Spell from '../interfaces/Spell.tsx'
 import HelperSpell from '../components/spell/HelperSpell.tsx'
 import ComparatorSpell from '../components/spell/ComparatorSpell.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
+import {useLocalStorage} from "../hooks/useLocalStorage.ts";
 
 
 export function SpellGame () {
   const { dailySpell, isLoading, error } = useDailySpell()
-  const [lastSpells, setLastSpells] = useState<Spell []>(()=>{
-    const savedHistory = localStorage.getItem('hp-spells-history')
-    if (savedHistory) {
-      return JSON.parse(savedHistory)
-    } else {
-      return []
-    }
-  })
+  const [lastSpells, setLastSpells] = useLocalStorage<Spell []>('hp-spell-history', [])
 
   const lastSpell = lastSpells.length > 0 ? lastSpells[lastSpells.length - 1] : null
   const currentSpell = dailySpell?.attributes as Spell | undefined
 
-  useEffect(() => {
-    localStorage.setItem('hp-spells-history', JSON.stringify(lastSpells))
-  }, [lastSpells]);
 
   const isVictory = Boolean(
     lastSpell &&
