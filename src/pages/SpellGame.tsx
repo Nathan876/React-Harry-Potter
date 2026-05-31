@@ -3,16 +3,20 @@ import type Spell from '../interfaces/Spell.tsx'
 import HelperSpell from '../components/spell/HelperSpell.tsx'
 import ComparatorSpell from '../components/spell/ComparatorSpell.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
-import {useLocalStorage} from "../hooks/useLocalStorage.ts";
+import { useLocalStorage } from '../hooks/useLocalStorage.ts'
+import { type ChangeEvent, useState } from 'react'
+import { convertDate } from '../utils/dateUtils.ts'
 
 
 export function SpellGame () {
-  const { dailySpell, isLoading, error } = useDailySpell()
+  const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
+  const { dailySpell, isLoading, error } = useDailySpell(new Date(dateSelected))
   const [lastSpells, setLastSpells] = useLocalStorage<Spell []>('hp-spell-history', [])
 
   const lastSpell = lastSpells.length > 0 ? lastSpells[lastSpells.length - 1] : null
   const currentSpell = dailySpell?.attributes as Spell | undefined
-
+  const tomorrow = new Date()
+  tomorrow.setDate(tomorrow.getDate() + 1)
 
   const isVictory = Boolean(
     lastSpell &&
@@ -26,9 +30,14 @@ export function SpellGame () {
     setLastSpells(prev => [...prev, spell])
   }
 
+  async function onChangeDate (e: ChangeEvent<HTMLInputElement>) {
+    setDateSelected(e.target.value)
+    setLastSpells([])
+  }
+
   return (
     <div className="p-8 max-w-2xl mx-auto">
-      <div className="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-center">
+      <div className="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-center flex items-center justify-between">
         <h2 className="text-xl font-bold mb-2">Sort du jour :</h2>
         {isLoading ? (
           <p className="text-gray-500">Recherche dans les archives magiques...</p>
@@ -38,13 +47,14 @@ export function SpellGame () {
           <p className="text-green-600 font-bold text-2xl">
           </p>
         )}
+        <input type={'date'} max={convertDate(tomorrow)} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
       </div>
       {!isVictory && (
         <Autocomplete
           label="Search a spell"
           id="search"
           type="spell"
-          onSelect={(Spell) => handleSelecteSpell(Spell as Spell)}
+          onSelect={(spell) => handleSelecteSpell(spell as Spell)}
         />
       )}
 
@@ -60,8 +70,9 @@ export function SpellGame () {
 
       <HelperSpell currentSpell={dailySpell?.attributes as Spell}></HelperSpell>
 
-      {lastSpells?.length > 0 && lastSpells.toReversed().map((Spell, index) => (
-        <ComparatorSpell key={`${Spell.id}-${index}`} lastSpell={Spell} currentSpell={dailySpell?.attributes as Spell}></ComparatorSpell>
+      {lastSpells?.length > 0 && lastSpells.toReversed().map((spell, index) => (
+        <ComparatorSpell key={`${spell.id}-${index}`} lastSpell={spell}
+                         currentSpell={dailySpell?.attributes as Spell}></ComparatorSpell>
       ))}
 
 
