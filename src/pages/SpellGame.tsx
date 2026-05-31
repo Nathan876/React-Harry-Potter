@@ -36,7 +36,6 @@ export function SpellGame () {
           <p className="text-red-500">{error}</p>
         ) : (
           <p className="text-green-600 font-bold text-2xl">
-            {(dailySpell?.attributes as Spell).name}
           </p>
         )}
       </div>

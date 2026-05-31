@@ -1,7 +1,9 @@
 import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
+import { useState } from 'react'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
+import { getQtySpells } from '../services/SpellService.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
 import {useLocalStorage} from "../hooks/useLocalStorage.ts";
 
@@ -21,7 +23,8 @@ export function CharacterGame () {
     console.log('Personnage du jour :', dailyCharacter)
     console.log('Personnage selectionner ', character)
     setLastCharacters(prev => [...prev, character])
-
+      const test = await getQtySpells()
+      console.log(test)
   }
 
   return (
@@ -34,7 +37,6 @@ export function CharacterGame () {
           <p className="text-red-500">{error}</p>
         ) : (
           <p className="text-green-600 font-bold text-2xl">
-            {(dailyCharacter?.attributes as Character).name}
           </p>
         )}
       </div>
