@@ -1,15 +1,15 @@
 import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
-import { useState } from 'react'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
 import { getQtySpells } from '../services/SpellService.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
+import {useLocalStorage} from "../hooks/useLocalStorage.ts";
 
 export function CharacterGame () {
   const { dailyCharacter, isLoading, error } = useDailyCharacter()
-  const [lastCharacter, setLastCharacter] = useState<Character | null>(null)
-  const [lastCharacters, setLastCharacters] = useState<Character []>([])
+  const [lastCharacters, setLastCharacters] = useLocalStorage<Character[]>('hp-character-history', [])
+  const lastCharacter = lastCharacters.length > 0 ? lastCharacters[lastCharacters.length -1] : null
   const currentCharacter = dailyCharacter?.attributes as Character | undefined
 
   const isVictory = Boolean(
@@ -19,8 +19,11 @@ export function CharacterGame () {
   )
 
   async function handleSelecteCharacter (character: Character) {
-    setLastCharacter(character)
-    lastCharacters.push(character)
+    console.log('Personnage du jour :', dailyCharacter)
+    console.log('Personnage selectionner ', character)
+    setLastCharacters(prev => [...prev, character])
+      const test = await getQtySpells()
+      console.log(test)
   }
 
   return (
@@ -57,8 +60,8 @@ export function CharacterGame () {
 
       <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character}></HelperCharacter>
 
-        {lastCharacters?.length > 0 && lastCharacters.toReversed().map(character => (
-          <ComparatorCharacter lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></ComparatorCharacter>
+        {lastCharacters?.length > 0 && lastCharacters.toReversed().map((character, index) => (
+          <ComparatorCharacter key={`${character.id}-${index}`}  lastCharacter={character} currentCharacter={dailyCharacter?.attributes as Character}></ComparatorCharacter>
         ))}
 
 
