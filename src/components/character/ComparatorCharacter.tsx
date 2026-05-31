@@ -16,7 +16,7 @@ function ComparatorCharacter (props: PropsComporatorCharacter) {
     <div
       className="flex flex-col items-center bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-4xl mx-auto my-4">
       <h2 className="flex items-center justify-center text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-indigo-100 w-full text-center">
-        <img src={props.lastCharacter.image} className="h-10  w-auto object-contain drop-shadow-md rounded" alt={props.lastCharacter?.name + 'photo'}/>
+        {props.lastCharacter.image !== null && (<img src={props.lastCharacter.image} className="h-10  w-auto object-contain drop-shadow-md rounded" alt={props.lastCharacter?.name + 'photo'}/>)}
         {props.lastCharacter?.name}
       </h2>
 
