@@ -1,6 +1,5 @@
 import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
-import { useState } from 'react'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
 import { getQtySpells } from '../services/SpellService.tsx'
