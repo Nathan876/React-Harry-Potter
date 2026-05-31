@@ -2,9 +2,9 @@ import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
-import { getQtySpells } from '../services/SpellService.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
 import {useLocalStorage} from "../hooks/useLocalStorage.ts";
+import Button from '../components/Button.tsx'
 
 export function CharacterGame () {
   const { dailyCharacter, isLoading, error } = useDailyCharacter()
@@ -22,8 +22,6 @@ export function CharacterGame () {
     console.log('Personnage du jour :', dailyCharacter)
     console.log('Personnage selectionner ', character)
     setLastCharacters(prev => [...prev, character])
-      const test = await getQtySpells()
-      console.log(test)
   }
 
   return (
@@ -55,6 +53,9 @@ export function CharacterGame () {
             <p className="text-green-800 text-lg">
               Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
             </p>
+            <Button type="button" onClick={() => setLastCharacters([])}>
+              Replay?
+            </Button>
           </div>
         )}
 

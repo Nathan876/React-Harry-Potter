@@ -4,7 +4,8 @@ const defaultFilter =
   '?filter[born_not_null]=true' +
   '&filter[species_not_null]=true' +
   '&filter[gender_not_null]=true' +
-  '&filter[blood_status_not_null]=true'
+  '&filter[blood_status_not_null]=true' +
+  '&filter[name_not_cont]=unidentified'
 
 export const url = 'https://api.potterdb.com/v1/characters'
 
