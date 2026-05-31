@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCharacters } from '../services/CharacterService';
+import { getDailyCharacter, getQtyCharacters } from '../services/CharacterService'
 import type DataItem from '../interfaces/DataItem';
 
 export function useDailyCharacter() {
@@ -11,15 +11,17 @@ export function useDailyCharacter() {
         const fetchDaily = async () => {
             try {
                 setIsLoading(true);
-                const response = await getCharacters();
-                const charactersList = response.data;
+                const response = await getQtyCharacters();
+                const charactersQty = response.meta.pagination.records;
 
-                if (charactersList.length > 0) {
+                if (charactersQty > 0) {
                     const today = new Date();
                     const dateSeed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-                    const dailyIndex = dateSeed % charactersList.length;
-                    setDailyCharacter(charactersList[dailyIndex]);
-                }
+                    const dailyIndex = dateSeed % charactersQty;
+                    const dailyCharacter = await getDailyCharacter(dailyIndex)
+                    if(dailyCharacter.data.length > 0){
+                        setDailyCharacter(dailyCharacter.data[0])
+                    }                }
                 setIsLoading(false);
             } catch (err) {
                 console.error("Erreur lors de la récupération:", err);
