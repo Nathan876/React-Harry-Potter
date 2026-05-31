@@ -10,7 +10,7 @@ export async function getQtySpells () :Promise<ResponseListApi>{
 
 export async function getDailySpells (index :number) :Promise<ResponseListApi>{
   const res = await fetch(url +
-    `?page[size]=1&page[nnumber]=${index}`)
+    `?page[size]=1&page[number]=${index}`)
   return await res.json()
 }
 

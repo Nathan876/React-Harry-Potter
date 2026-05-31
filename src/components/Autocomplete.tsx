@@ -134,9 +134,9 @@ function Autocomplete (props: PropsAutocomplete) {
               <li
                 key={index}
                 onClick={() => handleAutocompleteSelect(item)}
-                className={`px-6 py-3 cursor-pointer transition-colors duration-200 border-b border-stone-100 last:border-b-0 ${listItemHoverStyles[theme]}`}
+                className={`flex items-center px-6 py-3 cursor-pointer transition-colors duration-200 border-b border-stone-100 last:border-b-0 ${listItemHoverStyles[theme]}`}
               >
-                {item.name}
+                {item.image !== null && (<img className="h-10 mr-2 w-auto object-contain drop-shadow-md rounded" src={item.image} alt={item.name}/>)}{item.name}
               </li>
             ))}
           </ul>

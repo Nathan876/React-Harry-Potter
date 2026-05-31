@@ -19,8 +19,6 @@ export function SpellGame () {
   )
 
   async function handleSelecteSpell (Spell: Spell) {
-    console.log('Personnage du jour :', dailySpell)
-    console.log('Personnage selectionner ', Spell)
     setLastSpell(Spell)
     lastSpells.push(Spell)
   }
@@ -35,7 +33,6 @@ export function SpellGame () {
           <p className="text-red-500">{error}</p>
         ) : (
           <p className="text-green-600 font-bold text-2xl">
-            {(dailySpell?.attributes as Spell).name}
           </p>
         )}
       </div>
