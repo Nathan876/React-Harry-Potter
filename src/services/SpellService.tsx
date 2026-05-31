@@ -16,7 +16,7 @@ export async function getDailySpells (index :number) :Promise<ResponseListApi>{
 
 export async function getSpellsForAutocomplete (query: string): Promise<ResponseListApi> {
   const res = await fetch(url +
-    `?filter[name_cont]=${query}&page[size]=10`
+    `?filter[name_start]=${query}&page[size]=10`
   )
   return await res.json()
 }
