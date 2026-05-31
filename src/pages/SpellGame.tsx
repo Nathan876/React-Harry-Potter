@@ -4,6 +4,7 @@ import HelperSpell from '../components/spell/HelperSpell.tsx'
 import ComparatorSpell from '../components/spell/ComparatorSpell.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
 import {useLocalStorage} from "../hooks/useLocalStorage.ts";
+import Button from '../components/Button.tsx'
 
 
 export function SpellGame () {
@@ -55,6 +56,9 @@ export function SpellGame () {
           <p className="text-green-800 text-lg">
             Bravo ! Tu as trouvé <strong>{currentSpell?.name}</strong>
           </p>
+          <Button type="button" onClick={() => setLastSpells([])}>
+            Replay?
+          </Button>
         </div>
       )}
 
