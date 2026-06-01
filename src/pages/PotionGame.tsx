@@ -1,4 +1,4 @@
-import Autocomplete from '../components/Autocomplete.tsx'
+import AutocompleteDataItem from '../components/AutocompleteDataItem.tsx'
 import { useDailyPotion } from '../hooks/useDailyPotion.tsx'
 import type Potion from '../interfaces/Potion.tsx'
 import ComparatorPotion from '../components/potion/ComparatorPotion.tsx'
@@ -46,11 +46,11 @@ export function PotionGame () {
         <input type={'date'} max={convertDate(new Date())} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
       </div>
       {!isVictory && (
-        <Autocomplete
+        <AutocompleteDataItem
           label="Search a potion"
           id="search"
           type="potion"
-          onSelect={(potion) => handleSelectePotion(potion as Potion)}
+          onSelect={(potion: Potion) => handleSelectePotion(potion as Potion)}
         />
       )}
 

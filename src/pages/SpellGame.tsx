@@ -2,7 +2,7 @@ import { useDailySpell } from '../hooks/useDailySpell.tsx'
 import type Spell from '../interfaces/Spell.tsx'
 import HelperSpell from '../components/spell/HelperSpell.tsx'
 import ComparatorSpell from '../components/spell/ComparatorSpell.tsx'
-import Autocomplete from '../components/Autocomplete.tsx'
+import AutocompleteDataItem from '../components/AutocompleteDataItem.tsx'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import {useLocalStorage} from "../hooks/useLocalStorage.ts";
@@ -49,11 +49,11 @@ export function SpellGame () {
         <input type={'date'} max={convertDate(new Date())} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
       </div>
       {!isVictory && (
-        <Autocomplete
+        <AutocompleteDataItem
           label="Search a spell"
           id="search"
           type="spell"
-          onSelect={(spell) => handleSelecteSpell(spell as Spell)}
+          onSelect={(spell: Spell) => handleSelecteSpell(spell as Spell)}
         />
       )}
 
