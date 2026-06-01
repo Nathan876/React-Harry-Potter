@@ -38,6 +38,10 @@ function HelperCharacter (props: PropsHelperCharacter) {
       initHelper.push('A family member: ' + familyMembers[randomIndex])
     }
 
+    if (props.currentCharacter?.born !== null) {
+      initHelper.push('Born: ' + props.currentCharacter?.born)
+    }
+
     setHelper(initHelper)
     setHelpIndex(0)
   }, [props.currentCharacter])

@@ -20,12 +20,14 @@ function ComparatorCharacter (props: PropsComporatorCharacter) {
         {props.lastCharacter?.name}
       </h2>
 
-      <div className="grid grid-cols-5 gap-x-4 gap-y-3 w-full text-center items-center">
+      <div className="grid grid-cols-7 gap-x-4 gap-y-3 w-full text-center items-center">
         <div className={headerClass}>Gender</div>
         <div className={headerClass}>Hair color</div>
         <div className={headerClass}>Species</div>
         <div className={headerClass}>Blood status</div>
         <div className={headerClass}>House</div>
+        <div className={headerClass}>Nationality</div>
+        <div className={headerClass}>Patronus</div>
 
         <div
           className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.gender, props.lastCharacter?.gender)}`}>
@@ -46,6 +48,14 @@ function ComparatorCharacter (props: PropsComporatorCharacter) {
         <div
           className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.house, props.lastCharacter?.house)}`}>
           {props.lastCharacter?.house || '-'}
+        </div>
+        <div
+          className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.nationality, props.lastCharacter?.nationality)}`}>
+          {props.lastCharacter?.nationality || '-'}
+        </div>
+        <div
+          className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.patronus, props.lastCharacter?.patronus)}`}>
+          {props.lastCharacter?.patronus || '-'}
         </div>
       </div>
     </div>)
