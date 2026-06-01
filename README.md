@@ -1,77 +1,117 @@
-# Créateurs
+# 🧙 Potterdle
 
-Cecile Fischer & Nathan Chabalier
+> Un jeu de devinettes inspiré de *"Un Jour Un Film"*, appliqué à l'univers d'Harry Potter.  
+> Chaque partie, une ressource mystère (personnage, potion ou sort) est tirée au sort — devinez-la grâce aux comparaisons de métadonnées !
 
-# React + TypeScript + Vite
+---
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🎯 Présentation
 
-Currently, two official plugins are available:
+**Potterdle** est un projet frontend réalisé dans le cadre de nos études à Coda_.  
+Il s'inscrit dans le concept *"Un Jour, Une Ressource"* : une ressource mystère de l'univers Harry Potter est tirée au sort, et le joueur doit l'identifier en proposant des ressources du même type.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Après chaque tentative, une comparaison visuelle champ par champ révèle les similarités entre la proposition et la cible — jusqu'à la victoire !
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🌍 Univers sélectionné
 
-## Expanding the ESLint configuration
+**Thématique :** Harry Potter
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+L'univers de J.K. Rowling offre une richesse de métadonnées idéale pour ce type de jeu : personnages avec maison, baguette, statut ou espèce ; potions avec effets et ingrédients ; sorts avec type et niveau de difficulté.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+<!-- Précisez ici les types de ressources jouables : personnages / potions / sorts -->
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 👥 Membres de l'équipe
+
+| Nom | Rôle | Contributions principales |
+|-----|------|--------------------------|
+| Nathan Chabalier | Designer / Lead Front | Charte graphique, intégration CSS, mise en page des composants |
+| Cécile Fischer | Intégratrice / API | Appels API, autocomplete, gestion des données et des states |
+
+> L'ensemble des fonctionnalités a été développé conjointement par les deux membres de l'équipe,
+> chacun apportant son expertise sur sa zone de responsabilité principale.
+---
+
+## 🔌 API utilisée
+
+**API :** [PotterDB](https://potterdb.com/)
+
+---
+
+## ✨ Fonctionnalités
+
+### ✅ Obligatoires
+
+- [x] Tirage aléatoire d'une ressource mystère depuis l'API au chargement
+- [x] Champ de saisie avec autocomplete lié à la base de données API
+- [x] Comparaison visuelle champ par champ
+- [x] Détection et affichage de l'état de victoire
+
+### 🌟 Recommandées
+
+- [x] Historique des tentatives précédentes
+- [x] Feedback visuel distinctif (match exact 🟩 / match partiel 🟨 / aucun match 🟥)
+- [x] Gestion de fin de partie (option de rejouer)
+
+### 🚀 Bonus
+
+- [x] Sauvegarde de la partie en cours dans le `localStorage`
+- [x] Ressource du jour (seed basée sur la date — même ressource pour tous)
+- [x] Rejouer les jours précédents depuis leur seed historique
+
+---
+
+## 🛠 Technologies utilisées
+
+| Technologie      | Usage                                                 |
+|------------------|-------------------------------------------------------|
+| **React + Vite** | Composants fonctionnels, hooks natifs, bundler rapide |
+| **TypeScript**   | Typage fort des données API et des états du jeu       |
+| **React Router** | Navigation entre les pages                            |
+| **Tailwind CSS** | Bibliothèque css                                      |
+
+---
+
+## 🚀 Installation
+
+### Prérequis
+
+- Node.js `>= 18.x`
+- npm ou yarn
+
+### Étapes
+
+```bash
+# 1. Cloner le dépôt
+git clone https://github.com/Nathan876/React-Harry-Potter.git
+
+# 2. Se déplacer dans le dossier
+cd React-Harry-Potter
+
+# 3. Installer les dépendances
+npm install
+
+# 4. Lancer le serveur de développement
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+L'application sera disponible sur [http://localhost:5173](http://localhost:5173)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🎮 Utilisation
+
+1. Ouvrir l'application sur http://localhost:5173
+2. Une ressource mystère est automatiquement tirée au sort
+3. Taper le nom d'un personnage / potion / sort dans le champ de recherche
+4. Sélectionner personnage / potion / sort dans la liste de l'autocomplete
+5. Répéter jusqu'à trouver la bonne réponse !
+
+---
+
+## 📄 Licence
+
+Projet réalisé dans le cadre de la formation **Coda_**.
