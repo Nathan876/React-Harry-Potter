@@ -2,7 +2,7 @@ import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
-import Autocomplete from '../components/Autocomplete.tsx'
+import AutocompleteDataItem from '../components/AutocompleteDataItem.tsx'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import {useLocalStorage} from "../hooks/useLocalStorage.ts";
@@ -48,11 +48,11 @@ export function CharacterGame () {
 
       </div>
       {!isVictory && (
-        <Autocomplete
+        <AutocompleteDataItem
           label="Search a wizard"
           id="search"
           type="character"
-          onSelect={(character) => handleSelecteCharacter(character as Character)}
+          onSelect={(character: Character) => handleSelecteCharacter(character as Character)}
         />
       )}
 
