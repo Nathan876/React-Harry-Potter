@@ -3,7 +3,6 @@ import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
-import { useLocalStorage } from '../hooks/useLocalStorage.ts'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import {useLocalStorage} from "../hooks/useLocalStorage.ts";
@@ -15,8 +14,6 @@ export function CharacterGame () {
   const [lastCharacters, setLastCharacters] = useLocalStorage<Character[]>('hp-character-history', [])
   const lastCharacter = lastCharacters.length > 0 ? lastCharacters[lastCharacters.length - 1] : null
   const currentCharacter = dailyCharacter?.attributes as Character | undefined
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1)
 
   const isVictory = Boolean(
     lastCharacter &&
@@ -47,7 +44,7 @@ export function CharacterGame () {
           <p className="text-green-600 font-bold text-2xl">
           </p>
         )}
-        <input type={'date'} max={convertDate(tomorrow)} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
+        <input type={'date'} max={convertDate(new Date())} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
 
       </div>
       {!isVictory && (

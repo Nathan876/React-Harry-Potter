@@ -4,7 +4,7 @@ export const url = 'https://api.potterdb.com/v1/potions'
 
 const defaultFilter =
   '?filter[ingredients_not_null]=true' +
-  '&filter[effects_not_null]=true'
+  '&filter[effect_not_null]=true'
 
 
 export async function getQtyPotions () :Promise<ResponseListApi>{

@@ -4,10 +4,14 @@ import type Potion from '../interfaces/Potion.tsx'
 import ComparatorPotion from '../components/potion/ComparatorPotion.tsx'
 import HelperPotion from '../components/potion/HelperPotionl.tsx'
 import { useLocalStorage } from '../hooks/useLocalStorage.ts'
+import { type ChangeEvent, useState } from 'react'
+import { convertDate } from '../utils/dateUtils.ts'
+import Button from '../components/Button.tsx'
 
 
 export function PotionGame () {
-  const { dailyPotion, isLoading, error } = useDailyPotion()
+  const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
+  const { dailyPotion, isLoading, error } = useDailyPotion(new Date(dateSelected))
   const [lastPotions, setLastPotions] = useLocalStorage<Potion []>('hp-potion-history', [])
   const lastPotion = lastPotions.length > 0 ? lastPotions[lastPotions.length - 1] : null
   const currentPotion = dailyPotion?.attributes as Potion | undefined
@@ -22,6 +26,11 @@ export function PotionGame () {
     setLastPotions(prev => [...prev, potion])
   }
 
+  async function onChangeDate (e: ChangeEvent<HTMLInputElement>) {
+    setDateSelected(e.target.value)
+    setLastPotions([])
+  }
+
   return (
     <div className="p-8 max-w-2xl mx-auto">
       <div className="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-center">
@@ -34,6 +43,7 @@ export function PotionGame () {
           <p className="text-green-600 font-bold text-2xl">
           </p>
         )}
+        <input type={'date'} max={convertDate(new Date())} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
       </div>
       {!isVictory && (
         <Autocomplete
@@ -51,13 +61,17 @@ export function PotionGame () {
           <p className="text-green-800 text-lg">
             Bravo ! Tu as trouvé <strong>{currentPotion?.name}</strong>
           </p>
+          <Button type="button" onClick={() => setLastPotions([])}>
+            Replay?
+          </Button>
         </div>
       )}
 
       <HelperPotion currentPotion={dailyPotion?.attributes as Potion}></HelperPotion>
 
       {lastPotions?.length > 0 && lastPotions.toReversed().map((potion, index) => (
-        <ComparatorPotion key={`${potion.id}-${index}`} potion={potion} dailyPotion={dailyPotion?.attributes as Potion}></ComparatorPotion>
+        <ComparatorPotion key={`${potion.id}-${index}`} potion={potion}
+                          dailyPotion={dailyPotion?.attributes as Potion}></ComparatorPotion>
       ))}
 
 
