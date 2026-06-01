@@ -16,8 +16,6 @@ export function SpellGame () {
 
   const lastSpell = lastSpells.length > 0 ? lastSpells[lastSpells.length - 1] : null
   const currentSpell = dailySpell?.attributes as Spell | undefined
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1)
 
   const isVictory = Boolean(
     lastSpell &&
@@ -48,7 +46,7 @@ export function SpellGame () {
           <p className="text-green-600 font-bold text-2xl">
           </p>
         )}
-        <input type={'date'} max={convertDate(tomorrow)} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
+        <input type={'date'} max={convertDate(new Date())} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
       </div>
       {!isVictory && (
         <Autocomplete
