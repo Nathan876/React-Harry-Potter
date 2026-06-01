@@ -6,7 +6,8 @@ export default function Header () {
   const { theme, setTheme } = useTheme()
   const links = [
     { label: 'Character', href: '/character' },
-    { label: 'Spell', href: '/spell' }
+    { label: 'Spell', href: '/spell' },
+    { label: 'Potion', href: '/potion' }
   ]
 
   return (
