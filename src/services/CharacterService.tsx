@@ -19,6 +19,6 @@ export async function getDailyCharacter (index :number) :Promise<ResponseListApi
   return await res.json()
 }
 export async function getCharactersForAutocomplete (query: string): Promise<ResponseListApi> {
-  const res = await fetch(url + `${defaultFilter}&filter[name_cont]=${query}&page[size]=10`)
+  const res = await fetch(url + `${defaultFilter}&filter[name_start]=${query}&page[size]=10`)
   return await res.json()
 }

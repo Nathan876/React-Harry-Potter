@@ -122,6 +122,7 @@ function Autocomplete (props: PropsAutocomplete) {
           type={props.type || 'text'}
           id={props.id}
           value={input}
+          autoComplete="off"
           onChange={handleInputChange}
           placeholder={props.placeholder}
           className={`w-full px-6 py-3 bg-stone-100 rounded-full shadow-inner focus:outline-none focus:ring-2 transition-all duration-300 italic ${inputStyles[theme]}`}
