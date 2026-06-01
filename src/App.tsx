@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router'
 import {useTheme} from "./hooks/useTheme.tsx";
 import CharacterGame from './pages/CharacterGame.tsx'
 import SpellGame from './pages/SpellGame.tsx'
+import PotionGame from './pages/PotionGame.tsx'
 
 function App () {
     const { theme } = useTheme()
@@ -33,6 +34,7 @@ function App () {
                 <Route path="/" element={<Navigate to="/character" replace />} />
                 <Route path="/character" element={<CharacterGame/>}/>
                 <Route path="/spell" element={<SpellGame/>}/>
+                <Route path="/potion" element={<PotionGame/>}/>
             </Routes>
         </main>
     </div>

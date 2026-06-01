@@ -2,11 +2,12 @@ import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
-import { getQtySpells } from '../services/SpellService.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
 import { useLocalStorage } from '../hooks/useLocalStorage.ts'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
+import {useLocalStorage} from "../hooks/useLocalStorage.ts";
+import Button from '../components/Button.tsx'
 
 export function CharacterGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
@@ -58,15 +59,18 @@ export function CharacterGame () {
         />
       )}
 
-      {isVictory && (
-        <div
-          className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
-          <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
-          <p className="text-green-800 text-lg">
-            Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
-          </p>
-        </div>
-      )}
+        {isVictory && (
+          <div
+            className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
+            <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
+            <p className="text-green-800 text-lg">
+              Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
+            </p>
+            <Button type="button" onClick={() => setLastCharacters([])}>
+              Replay?
+            </Button>
+          </div>
+        )}
 
       <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character}></HelperCharacter>
 
