@@ -1,6 +1,8 @@
 import type Character from '../../interfaces/Character.tsx'
 import Button from '../Button.tsx'
 import { useEffect, useState } from 'react'
+import {useTheme} from "../../hooks/useTheme.tsx";
+import type {Theme} from "../../contexts/ThemeContext.tsx";
 
 interface PropsHelperCharacter {
   currentCharacter: Character
@@ -9,6 +11,17 @@ interface PropsHelperCharacter {
 function HelperCharacter(props: PropsHelperCharacter) {
   const [helper, setHelper] = useState<string[]>([])
   const [helpIndex, setHelpIndex] = useState(0)
+  const {theme} = useTheme()
+
+  const themeStyles: Record<Theme, string> = {
+    Gryffindor: "bg-red-800 text-yellow-400 border-yellow-500 focus:ring-yellow-500/50",
+    Slytherin: "bg-green-800 text-gray-300 border-gray-400  focus:ring-gray-400/50",
+    Ravenclaw: "bg-blue-900 text-bronze-400 border-blue-400 focus:ring-blue-400/50",
+    Hufflepuff: "bg-yellow-500 text-black border-black focus:ring-yellow-600/50",
+    Accessible: "bg-white text-black border-black focus:ring-black/50"
+  }
+
+  const baseClasses = "mb-8 p-4 rounded-lg text-center flex items-center justify-between"
 
   useEffect(() => {
     const titles = props.currentCharacter?.titles ?? [];
@@ -43,7 +56,7 @@ function HelperCharacter(props: PropsHelperCharacter) {
   }, [props.currentCharacter])
 
   return (
-    <div className="w-full mx-auto p-4 bg-[#fdfaf1] border-2  border-amber-900/30 rounded-xl shadow-2xl font-serif relative overflow-hidden">
+    <div className={`${baseClasses} ${themeStyles[theme]}`}>
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <Button

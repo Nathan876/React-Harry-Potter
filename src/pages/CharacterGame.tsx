@@ -7,6 +7,8 @@ import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import {useLocalStorage} from "../hooks/useLocalStorage.ts";
 import Button from '../components/Button.tsx'
+import {useTheme} from "../hooks/useTheme.tsx";
+import type {Theme} from "../contexts/ThemeContext.tsx";
 
 export function CharacterGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
@@ -14,6 +16,18 @@ export function CharacterGame () {
   const [lastCharacters, setLastCharacters] = useLocalStorage<Character[]>('hp-character-history', [])
   const lastCharacter = lastCharacters.length > 0 ? lastCharacters[lastCharacters.length - 1] : null
   const currentCharacter = dailyCharacter?.attributes as Character | undefined
+
+  const {theme} = useTheme()
+
+  const themeStyles: Record<Theme, string> = {
+    Gryffindor: "bg-red-800 text-yellow-400 border-yellow-500 focus:ring-yellow-500/50",
+    Slytherin: "bg-green-800 text-gray-300 border-gray-400  focus:ring-gray-400/50",
+    Ravenclaw: "bg-blue-900 text-bronze-400 border-blue-400 focus:ring-blue-400/50",
+    Hufflepuff: "bg-yellow-500 text-black border-black focus:ring-yellow-600/50",
+    Accessible: "bg-white text-black border-black focus:ring-black/50"
+  }
+
+  const baseClasses = "mb-8 p-4 rounded-lg text-center flex items-center justify-between"
 
   const isVictory = Boolean(
     lastCharacter &&
@@ -34,10 +48,10 @@ export function CharacterGame () {
 
   return (
     <div className="p-8 max-w-2xl mx-auto">
-      <div className="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-center flex items-center justify-between">
+      <div className={`${baseClasses} ${themeStyles[theme]}`}>
         <h2 className="text-xl font-bold mb-2">Personnage du jour :</h2>
         {isLoading ? (
-          <p className="text-gray-500">Recherche dans les archives magiques...</p>
+          <p className="text-yellow-400">Recherche dans les archives magiques...</p>
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
@@ -75,7 +89,6 @@ export function CharacterGame () {
         <ComparatorCharacter key={`${character.id}-${index}`} lastCharacter={character}
                              currentCharacter={dailyCharacter?.attributes as Character}></ComparatorCharacter>
       ))}
-
 
     </div>
   )

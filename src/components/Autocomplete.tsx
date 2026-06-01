@@ -67,22 +67,23 @@ function Autocomplete (props: PropsAutocomplete) {
   }
 
 
-  const sectionStyles: Record<Theme, string> = {
-    Gryffindor: 'bg-orange-50 border-red-900/20',
-    Slytherin: 'bg-green-50 border-green-900/20',
-    Ravenclaw: 'bg-blue-50 border-blue-900/20',
-    Hufflepuff: 'bg-yellow-50 border-yellow-900/20',
-    Accessible: 'bg-white border-black/20'
-  }
-
   const labelStyles: Record<Theme, string> = {
-    Gryffindor: 'text-red-900',
-    Slytherin: 'text-green-900',
-    Ravenclaw: 'text-blue-900',
-    Hufflepuff: 'text-yellow-900',
+    Gryffindor: 'text-yellow-400',
+    Slytherin: 'text-gray-300',
+    Ravenclaw: 'text-bronze-400',
+    Hufflepuff: 'text-black',
     Accessible: 'text-black'
   }
 
+  const themeStyles: Record<Theme, string> = {
+    Gryffindor: "bg-red-800 text-yellow-400 border-yellow-500 focus:ring-yellow-500/50",
+    Slytherin: "bg-green-800 text-gray-300 border-gray-400  focus:ring-gray-400/50",
+    Ravenclaw: "bg-blue-900 text-bronze-400 border-blue-400 focus:ring-blue-400/50",
+    Hufflepuff: "bg-yellow-500 text-black border-black focus:ring-yellow-600/50",
+    Accessible: "bg-white text-black border-black focus:ring-black/50"
+  }
+
+  const baseClasses = "mb-8 p-4 rounded-lg text-center flex items-center justify-center"
   const inputStyles: Record<Theme, string> = {
     Gryffindor: 'text-red-900 border-red-900/30 focus:border-yellow-500 focus:ring-yellow-500/50 placeholder-red-900/40',
     Slytherin: 'text-green-900 border-green-900/30 focus:border-gray-400 focus:ring-gray-400/50 placeholder-green-900/40',
@@ -109,11 +110,11 @@ function Autocomplete (props: PropsAutocomplete) {
 
   return (
     <section
-      className={`p-8 rounded-lg shadow-lg border flex flex-col justify-center transition-colors duration-300 ${sectionStyles[theme]}`}>
+      className={`${baseClasses} ${themeStyles[theme]}`}>
       <div className="relative w-full">
         <label
           htmlFor={props.id}
-          className={`block font-cinzel font-semibold mb-2 pl-2 transition-colors duration-300 ${labelStyles[theme]}`}
+          className={`block text-left font-cinzel font-semibold mb-2 pl-2 transition-colors duration-300 ${labelStyles[theme]}`}
         >
           {props.label}
         </label>
