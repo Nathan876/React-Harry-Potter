@@ -16,9 +16,9 @@ function HelperSpell (props: PropsHelper) {
     const hand = props.currentSpell?.hand
     const incantation = props.currentSpell?.incantation
 
-    if (effect !== null) initHelper.push(effect)
-    if (hand !== null) initHelper.push(hand)
-    if (incantation !== null) initHelper.push(incantation)
+    if (effect !== null) initHelper.push('Effect: ' + effect)
+    if (hand !== null) initHelper.push('Hand: ' + hand)
+    if (incantation !== null) initHelper.push('Incantation: ' + incantation)
 
     setHelper(initHelper)
     setHelpIndex(0)
