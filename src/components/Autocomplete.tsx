@@ -24,9 +24,9 @@ function Autocomplete (props: PropsAutocomplete) {
   const [autocompleteItems, setAutocompleteItems] = useState<Character[] | Spell[] | Potion[]>([])
 
   function handleAutocompleteSelect (item: Character | Spell | Potion) {
-    setInput(item.name)
     setAutocompleteItems([])
     props.onSelect(item)
+    setInput('')
   }
 
   async function handleInputChange (event: React.ChangeEvent<HTMLInputElement>) {
