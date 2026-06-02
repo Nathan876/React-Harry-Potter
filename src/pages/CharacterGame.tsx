@@ -2,13 +2,15 @@ import type Character from '../interfaces/Character.tsx'
 import { useDailyCharacter } from '../hooks/useDailyCharacter.tsx'
 import ComparatorCharacter from '../components/character/ComparatorCharacter.tsx'
 import HelperCharacter from '../components/character/HelperCharacter.tsx'
-import Autocomplete from '../components/Autocomplete.tsx'
+import AutocompleteDataItem from '../components/AutocompleteDataItem.tsx'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import {useLocalStorage} from "../hooks/useLocalStorage.tsx";
 import Button from '../components/Button.tsx'
 import {useTheme} from "../hooks/useTheme.tsx";
 import type {Theme} from "../contexts/ThemeContext.tsx";
+import type Potion from '../interfaces/Potion.tsx'
+import type Spell from '../interfaces/Spell.tsx'
 
 export function CharacterGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
@@ -64,11 +66,11 @@ export function CharacterGame () {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-8">
         <div className="w-full">
           {!isVictory ? (
-            <Autocomplete
+            <AutocompleteDataItem
               label="Search a wizard"
               id="search"
               type="character"
-              onSelect={(character) => handleSelecteCharacter(character as Character)}
+              onSelect={(character: Character | Potion | Spell)  => handleSelecteCharacter(character as Character)}
             />
           ) : (
             <div
