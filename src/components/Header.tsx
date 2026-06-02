@@ -18,11 +18,29 @@ export default function Header () {
     Accessible: "bg-white text-black border-black focus:ring-black/50"
   }
 
+  const logoStyles: Record<Theme, string> = {
+    Gryffindor: "drop-shadow-md",
+    Slytherin: "drop-shadow-md",
+    Ravenclaw: "drop-shadow-md",
+    Hufflepuff: "drop-shadow-[0_2px_5px_rgba(0,0,0,0.8)]",
+    Accessible: ""
+  }
+
   const baseClasses = "flex justify-between items-center p-1 px-10"
 
   return (
     <header className={`${baseClasses} ${themeStyles[theme]}`}>
-      <img src="/src/assets/Harry-Potter-Logo.png" alt="logo harry potter" className="w-25 h-auto shadow-2xl"/>
+      {theme === 'Accessible' ? (
+          <span className="font-cinzel font-black text-2xl uppercase tracking-widest text-black">
+          Harry Potter
+        </span>
+      ) : (
+          <img
+              src="/src/assets/Harry-Potter-Logo.png"
+              alt="logo harry potter"
+              className={`w-24 h-auto transition-all duration-300 ${logoStyles[theme]}`}
+          />
+      )}
       <div className="flex gap-6">
         {links.map((link) => (
           <Link key={link.href} to={link.href} className="font-cinzel font-bold hover:opacity-80">
