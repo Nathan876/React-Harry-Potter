@@ -63,6 +63,28 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
           inputValue={input}
           options={autocompleteItems}
           getOptionLabel={(option) => option.attributes?.name || ''}
+          renderOption={(props, option) => {
+            const { key, ...optionProps } = props
+
+            return (
+              <li
+                key={key}
+                {...optionProps}
+                className={`${optionProps.className || ''} flex items-center px-4 py-2`}
+              >
+                {option.attributes.image !== null && (
+                  <img
+                    src={option.attributes.image}
+                    className="h-10 w-auto object-contain drop-shadow-md rounded mr-2"
+                    referrerPolicy="no-referrer"
+                    crossOrigin="anonymous"
+                    alt={option.attributes.name + ' photo'}
+                  />
+                )}
+                {option.attributes.name}
+              </li>
+            )
+          }}
           onChange={(_event, value) => {
             if (value) {
               handleAutocompleteSelect(value)
