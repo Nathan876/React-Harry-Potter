@@ -6,7 +6,6 @@ const defaultFilter =
   '?filter[ingredients_not_null]=true' +
   '&filter[effect_not_null]=true'
 
-
 export async function getQtyPotions () :Promise<ResponseListApi>{
   const res = await fetch(url +
     `${defaultFilter}&page[size]=1`)
@@ -21,7 +20,7 @@ export async function getDailyPotions (index :number) :Promise<ResponseListApi>{
 
 export async function getPotionsForAutocomplete (query: string): Promise<ResponseListApi> {
   const res = await fetch(url +
-    `?filter[name_start]=${query}&page[size]=10`
+    `${defaultFilter}&filter[name_start]=${query}&page[size]=10`
   )
   return await res.json()
 }

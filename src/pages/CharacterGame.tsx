@@ -7,6 +7,8 @@ import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import {useLocalStorage} from "../hooks/useLocalStorage.ts";
 import Button from '../components/Button.tsx'
+import type Potion from '../interfaces/Potion.tsx'
+import type Spell from '../interfaces/Spell.tsx'
 
 export function CharacterGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
@@ -52,7 +54,7 @@ export function CharacterGame () {
           label="Search a wizard"
           id="search"
           type="character"
-          onSelect={(character: Character) => handleSelecteCharacter(character as Character)}
+          onSelect={ (character: Character | Potion | Spell) => handleSelecteCharacter(character as Character)}
         />
       )}
 
