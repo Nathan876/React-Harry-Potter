@@ -5,25 +5,24 @@ import HelperCharacter from '../components/character/HelperCharacter.tsx'
 import AutocompleteDataItem from '../components/AutocompleteDataItem.tsx'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
-import {useLocalStorage} from "../hooks/useLocalStorage.ts";
+import { useLocalStorage } from '../hooks/useLocalStorage.ts'
 import Button from '../components/Button.tsx'
-import type Potion from '../interfaces/Potion.tsx'
-import type Spell from '../interfaces/Spell.tsx'
+import type DataItem from '../interfaces/DataItem.tsx'
 
 export function CharacterGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
   const { dailyCharacter, isLoading, error } = useDailyCharacter(new Date(dateSelected))
-  const [lastCharacters, setLastCharacters] = useLocalStorage<Character[]>('hp-character-history', [])
+  const [lastCharacters, setLastCharacters] = useLocalStorage<DataItem[]>('hp-character-history', [])
   const lastCharacter = lastCharacters.length > 0 ? lastCharacters[lastCharacters.length - 1] : null
-  const currentCharacter = dailyCharacter?.attributes as Character | undefined
+  const currentCharacter = dailyCharacter as DataItem | undefined
 
   const isVictory = Boolean(
     lastCharacter &&
     currentCharacter &&
-    lastCharacter.name === currentCharacter.name
+    lastCharacter?.attributes?.name === currentCharacter?.attributes?.name
   )
 
-  async function handleSelecteCharacter (character: Character) {
+  async function handleSelecteCharacter (character: DataItem) {
     console.log('Personnage du jour :', dailyCharacter)
     console.log('Personnage selectionner ', character)
     setLastCharacters(prev => [...prev, character])
@@ -54,27 +53,28 @@ export function CharacterGame () {
           label="Search a wizard"
           id="search"
           type="character"
-          onSelect={ (character: Character | Potion | Spell) => handleSelecteCharacter(character as Character)}
+          onSelect={(character: DataItem) => handleSelecteCharacter(character)}
+          lastItems={lastCharacters}
         />
       )}
 
-        {isVictory && (
-          <div
-            className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
-            <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
-            <p className="text-green-800 text-lg">
-              Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
-            </p>
-            <Button type="button" onClick={() => setLastCharacters([])}>
-              Replay?
-            </Button>
-          </div>
-        )}
+      {isVictory && (
+        <div
+          className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
+          <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
+          <p className="text-green-800 text-lg">
+            Bravo ! Tu as trouvé <strong>{currentCharacter?.attributes.name}</strong>
+          </p>
+          <Button type="button" onClick={() => setLastCharacters([])}>
+            Replay?
+          </Button>
+        </div>
+      )}
 
       <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character}></HelperCharacter>
 
       {lastCharacters?.length > 0 && lastCharacters.toReversed().map((character, index) => (
-        <ComparatorCharacter key={`${character.id}-${index}`} lastCharacter={character}
+        <ComparatorCharacter key={`${character.id}-${index}`} lastCharacter={character?.attributes as Character}
                              currentCharacter={dailyCharacter?.attributes as Character}></ComparatorCharacter>
       ))}
 

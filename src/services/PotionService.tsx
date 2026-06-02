@@ -20,7 +20,7 @@ export async function getDailyPotions (index :number) :Promise<ResponseListApi>{
 
 export async function getPotionsForAutocomplete (query: string): Promise<ResponseListApi> {
   const res = await fetch(url +
-    `${defaultFilter}&filter[name_start]=${query}&page[size]=10`
+    `${defaultFilter}&filter[name_start]=${query}`
   )
   return await res.json()
 }
