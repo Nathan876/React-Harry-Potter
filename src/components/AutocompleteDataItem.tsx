@@ -45,9 +45,6 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
 
 
     const filteredData: DataItem[] | undefined = data?.data.filter(dataItem => props.lastItems.findIndex(item => item.id === dataItem.id) < 0)
-    console.log('data', data)
-    console.log('lasts', props.lastItems)
-    console.log('filtered', filteredData)
     setAutocompleteItems(filteredData || [])
   }
 
@@ -95,9 +92,11 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
             }
           }}
 
-          onInputChange={async (_event, newInputValue) => {
-            setInput(newInputValue)
-            await handleInputChange(newInputValue)
+          onInputChange={async (_event, newInputValue, reason) => {
+            if (reason === 'input') {
+              setInput(newInputValue)
+              await handleInputChange(newInputValue)
+            }
           }}
 
           renderInput={(params) => (
