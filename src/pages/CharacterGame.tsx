@@ -5,7 +5,7 @@ import HelperCharacter from '../components/character/HelperCharacter.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
-import {useLocalStorage} from "../hooks/useLocalStorage.ts";
+import {useLocalStorage} from "../hooks/useLocalStorage.tsx";
 import Button from '../components/Button.tsx'
 import {useTheme} from "../hooks/useTheme.tsx";
 import type {Theme} from "../contexts/ThemeContext.tsx";
@@ -47,7 +47,7 @@ export function CharacterGame () {
   }
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
+    <div className="p-8 max-w-6xl mx-auto">
       <div className={`${baseClasses} ${themeStyles[theme]}`}>
         <h2 className="text-xl font-bold mb-2">Personnage du jour :</h2>
         {isLoading ? (
@@ -61,35 +61,37 @@ export function CharacterGame () {
         <input type={'date'} max={convertDate(new Date())} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
 
       </div>
-      {!isVictory && (
-        <Autocomplete
-          label="Search a wizard"
-          id="search"
-          type="character"
-          onSelect={(character) => handleSelecteCharacter(character as Character)}
-        />
-      )}
-
-        {isVictory && (
-          <div
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-8">
+        <div className="w-full">
+          {!isVictory ? (
+            <Autocomplete
+              label="Search a wizard"
+              id="search"
+              type="character"
+              onSelect={(character) => handleSelecteCharacter(character as Character)}
+            />
+          ) : (
+            <div
             className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
             <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
             <p className="text-green-800 text-lg">
-              Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
+            Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
             </p>
             <Button type="button" onClick={() => setLastCharacters([])}>
               Replay?
             </Button>
+            </div>
+          )}
           </div>
-        )}
+          <div className="w-full">
+            <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character}></HelperCharacter>
+          </div>
+        </div>
 
-      <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character}></HelperCharacter>
-
-      {lastCharacters?.length > 0 && lastCharacters.toReversed().map((character, index) => (
-        <ComparatorCharacter key={`${character.id}-${index}`} lastCharacter={character}
+      {lastCharacters?.length > 0 && (
+        <ComparatorCharacter lastCharacters={lastCharacters.toReversed()}
                              currentCharacter={dailyCharacter?.attributes as Character}></ComparatorCharacter>
-      ))}
-
+      )}
     </div>
   )
 }

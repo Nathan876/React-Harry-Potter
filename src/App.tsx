@@ -27,7 +27,7 @@ function App () {
     }
 
     return (
-    <div className={`min-h-screen transition-colors duration-300 font-lora ${getThemeClasses()}`} style={{backgroundImage: `url("/src/assets/background.jpg")`, backgroundSize: 'cover'}}>
+    <div className={`min-h-screen transition-colors duration-300 font-lora ${getThemeClasses()}`} style={{backgroundImage: `url("/src/assets/background.jpg")`, backgroundSize: 'cover', backgroundAttachment: 'fixed'}}>
         <Header/>
         <main className="p-4">
             <Routes>

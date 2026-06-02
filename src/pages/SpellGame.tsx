@@ -5,7 +5,7 @@ import ComparatorSpell from '../components/spell/ComparatorSpell.tsx'
 import Autocomplete from '../components/Autocomplete.tsx'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
-import {useLocalStorage} from "../hooks/useLocalStorage.ts";
+import {useLocalStorage} from "../hooks/useLocalStorage.tsx";
 import Button from '../components/Button.tsx'
 
 
