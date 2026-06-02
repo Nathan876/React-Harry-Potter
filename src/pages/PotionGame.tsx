@@ -7,6 +7,8 @@ import { useLocalStorage } from '../hooks/useLocalStorage.ts'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import Button from '../components/Button.tsx'
+import type Character from '../interfaces/Character.tsx'
+import type Spell from '../interfaces/Spell.tsx'
 
 
 export function PotionGame () {
@@ -50,7 +52,7 @@ export function PotionGame () {
           label="Search a potion"
           id="search"
           type="potion"
-          onSelect={(potion: Potion) => handleSelectePotion(potion as Potion)}
+          onSelect={(potion:  Character | Potion | Spell) => handleSelectePotion(potion as Potion)}
         />
       )}
 
