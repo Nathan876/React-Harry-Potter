@@ -7,24 +7,23 @@ import { useLocalStorage } from '../hooks/useLocalStorage.ts'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import Button from '../components/Button.tsx'
-import type Character from '../interfaces/Character.tsx'
-import type Spell from '../interfaces/Spell.tsx'
+import type DataItem from '../interfaces/DataItem.tsx'
 
 
 export function PotionGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
   const { dailyPotion, isLoading, error } = useDailyPotion(new Date(dateSelected))
-  const [lastPotions, setLastPotions] = useLocalStorage<Potion []>('hp-potion-history', [])
+  const [lastPotions, setLastPotions] = useLocalStorage<DataItem []>('hp-potion-history', [])
   const lastPotion = lastPotions.length > 0 ? lastPotions[lastPotions.length - 1] : null
-  const currentPotion = dailyPotion?.attributes as Potion | undefined
+  const currentPotion = dailyPotion
 
   const isVictory = Boolean(
     lastPotion &&
     currentPotion &&
-    lastPotion.name === currentPotion.name
+    lastPotion?.attributes.name === currentPotion?.attributes.name
   )
 
-  async function handleSelectePotion (potion: Potion) {
+  async function handleSelectePotion (potion: DataItem) {
     setLastPotions(prev => [...prev, potion])
   }
 
@@ -52,7 +51,8 @@ export function PotionGame () {
           label="Search a potion"
           id="search"
           type="potion"
-          onSelect={(potion:  Character | Potion | Spell) => handleSelectePotion(potion as Potion)}
+          onSelect={(potion: DataItem) => handleSelectePotion(potion)}
+          lastItems={lastPotions}
         />
       )}
 
@@ -61,7 +61,7 @@ export function PotionGame () {
           className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
           <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
           <p className="text-green-800 text-lg">
-            Bravo ! Tu as trouvé <strong>{currentPotion?.name}</strong>
+            Bravo ! Tu as trouvé <strong>{currentPotion?.attributes.name}</strong>
           </p>
           <Button type="button" onClick={() => setLastPotions([])}>
             Replay?
@@ -72,7 +72,7 @@ export function PotionGame () {
       <HelperPotion currentPotion={dailyPotion?.attributes as Potion}></HelperPotion>
 
       {lastPotions?.length > 0 && lastPotions.toReversed().map((potion, index) => (
-        <ComparatorPotion key={`${potion.id}-${index}`} potion={potion}
+        <ComparatorPotion key={`${potion.id}-${index}`} potion={potion?.attributes as Potion}
                           dailyPotion={dailyPotion?.attributes as Potion}></ComparatorPotion>
       ))}
 

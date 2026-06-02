@@ -5,27 +5,26 @@ import ComparatorSpell from '../components/spell/ComparatorSpell.tsx'
 import AutocompleteDataItem from '../components/AutocompleteDataItem.tsx'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
-import {useLocalStorage} from "../hooks/useLocalStorage.ts";
+import { useLocalStorage } from '../hooks/useLocalStorage.ts'
 import Button from '../components/Button.tsx'
-import type Character from '../interfaces/Character.tsx'
-import type Potion from '../interfaces/Potion.tsx'
+import type DataItem from '../interfaces/DataItem.tsx'
 
 
 export function SpellGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
   const { dailySpell, isLoading, error } = useDailySpell(new Date(dateSelected))
-  const [lastSpells, setLastSpells] = useLocalStorage<Spell []>('hp-spell-history', [])
+  const [lastSpells, setLastSpells] = useLocalStorage<DataItem []>('hp-spell-history', [])
 
   const lastSpell = lastSpells.length > 0 ? lastSpells[lastSpells.length - 1] : null
-  const currentSpell = dailySpell?.attributes as Spell | undefined
+  const currentSpell = dailySpell?.attributes as DataItem | undefined
 
   const isVictory = Boolean(
     lastSpell &&
     currentSpell &&
-    lastSpell.name === currentSpell.name
+    lastSpell?.attributes?.name === currentSpell?.attributes?.name
   )
 
-  async function handleSelecteSpell (spell: Spell) {
+  async function handleSelecteSpell (spell: DataItem) {
     console.log('Sort du jour :', dailySpell)
     console.log('Sort selectionner ', spell)
     setLastSpells(prev => [...prev, spell])
@@ -55,7 +54,8 @@ export function SpellGame () {
           label="Search a spell"
           id="search"
           type="spell"
-          onSelect={(spell:  Character | Potion | Spell) => handleSelecteSpell(spell as Spell)}
+          onSelect={(spell: DataItem) => handleSelecteSpell(spell as DataItem)}
+          lastItems={lastSpells}
         />
       )}
 
@@ -64,7 +64,7 @@ export function SpellGame () {
           className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
           <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
           <p className="text-green-800 text-lg">
-            Bravo ! Tu as trouvé <strong>{currentSpell?.name}</strong>
+            Bravo ! Tu as trouvé <strong>{currentSpell?.attributes?.name}</strong>
           </p>
           <Button type="button" onClick={() => setLastSpells([])}>
             Replay?
@@ -75,7 +75,7 @@ export function SpellGame () {
       <HelperSpell currentSpell={dailySpell?.attributes as Spell}></HelperSpell>
 
       {lastSpells?.length > 0 && lastSpells.toReversed().map((spell, index) => (
-        <ComparatorSpell key={`${spell.id}-${index}`} lastSpell={spell}
+        <ComparatorSpell key={`${spell.id}-${index}`} lastSpell={spell.attributes as Spell}
                          currentSpell={dailySpell?.attributes as Spell}></ComparatorSpell>
       ))}
 
