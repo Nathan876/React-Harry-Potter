@@ -52,7 +52,7 @@ export function SpellGame () {
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <div className={`${baseClasses} ${themeStyles[theme]}`}>
-        <div className="w-1/3 text-left">
+        <div className="w-1/2 text-left">
           {!isVictory ? (
               <AutocompleteDataItem
                   label="Search a spell"

@@ -4,8 +4,8 @@ import { getSpellsForAutocomplete } from '../services/SpellService.tsx'
 import { getPotionsForAutocomplete } from '../services/PotionService.tsx'
 import { Autocomplete, TextField } from '@mui/material'
 import type DataItem from '../interfaces/DataItem.tsx'
-import {useTheme} from "../hooks/useTheme.tsx";
-import type {Theme} from "../contexts/ThemeContext.tsx";
+import { useTheme } from "../hooks/useTheme.tsx"
+import type { Theme } from "../contexts/ThemeContext.tsx"
 
 interface PropsAutocomplete {
   label: string;
@@ -20,62 +20,35 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
   const { theme } = useTheme()
   const [autocompleteItems, setAutocompleteItems] = useState<DataItem[]>([])
   const [input, setInput] = useState('')
-
-  const labelStyles: Record<Theme, string> = {
-    Gryffindor: 'text-red-900',
-    Slytherin: 'text-green-900',
-    Ravenclaw: 'text-blue-900',
-    Hufflepuff: 'text-yellow-900',
-    Accessible: 'text-black'
-  }
-
-  const themeStyles: Record<Theme, string> = {
-    Gryffindor: "bg-red-800 text-yellow-400 border-yellow-500",
-    Slytherin: "bg-green-800 text-gray-300 border-gray-400",
-    Ravenclaw: "bg-blue-900 text-bronze-400 border-blue-400",
-    Hufflepuff: "bg-yellow-500 text-black border-black",
-    Accessible: "bg-white text-black border-black"
-  }
-
-  const inputStyles: Record<Theme, string> = {
-    Gryffindor: "bg-red-800 text-yellow-400 border-yellow-500 focus-within:border-yellow-400 focus-within:ring-yellow-500/50",
-    Slytherin: "bg-green-800 text-gray-200 border-gray-400 focus-within:border-gray-300 focus-within:ring-gray-400/50",
-    Ravenclaw: "bg-blue-900 text-blue-200 border-blue-400 focus-within:border-blue-300 focus-within:ring-blue-400/50",
-    Hufflepuff: "bg-yellow-500 text-black border-black focus-within:border-gray-800 focus-within:ring-yellow-600/50",
-    Accessible: "bg-white text-black border-black focus-within:border-black focus-within:ring-black"
+  const inputRingStyles: Record<Theme, string> = {
+    Gryffindor: "focus-within:ring-red-600 focus-within:border-red-600",
+    Slytherin: "focus-within:ring-emerald-600 focus-within:border-emerald-600",
+    Ravenclaw: "focus-within:ring-blue-600 focus-within:border-blue-600",
+    Hufflepuff: "focus-within:ring-yellow-500 focus-within:border-yellow-500",
+    Accessible: "focus-within:ring-black focus-within:border-black"
   }
 
   const iconStyles: Record<Theme, string> = {
-    Gryffindor: "text-yellow-400",
-    Slytherin: "text-gray-200",
-    Ravenclaw: "text-blue-200",
-    Hufflepuff: "text-black",
+    Gryffindor: "text-red-700",
+    Slytherin: "text-emerald-700",
+    Ravenclaw: "text-blue-700",
+    Hufflepuff: "text-yellow-600",
     Accessible: "text-black"
-  }
-  const dropdownStyles: Record<Theme, string> = {
-    Gryffindor: 'bg-white border-red-900/20 shadow-red-900/10',
-    Slytherin: 'bg-white border-green-900/20 shadow-green-900/10',
-    Ravenclaw: 'bg-white border-blue-900/20 shadow-blue-900/10',
-    Hufflepuff: 'bg-white border-yellow-900/20 shadow-yellow-900/10',
-    Accessible: 'bg-white border-black shadow-black/20'
   }
 
   const listItemHoverStyles: Record<Theme, string> = {
-    Gryffindor: 'hover:bg-red-50 text-red-900',
-    Slytherin: 'hover:bg-green-50 text-green-900',
-    Ravenclaw: 'hover:bg-blue-50 text-blue-900',
-    Hufflepuff: 'hover:bg-yellow-50 text-yellow-900',
-    Accessible: 'hover:bg-gray-200 text-black font-medium'
+    Gryffindor: 'hover:bg-red-50 hover:text-red-900',
+    Slytherin: 'hover:bg-emerald-50 hover:text-emerald-900',
+    Ravenclaw: 'hover:bg-blue-50 hover:text-blue-900',
+    Hufflepuff: 'hover:bg-yellow-50 hover:text-yellow-900',
+    Accessible: 'hover:bg-gray-100 hover:text-black'
   }
-
 
   function handleAutocompleteSelect (item: DataItem) {
     props.onSelect(item)
     setAutocompleteItems([])
     setInput('')
   }
-
-  const baseClasses = "mb-8 p-4 rounded-lg flex flex-col justify-center transition-colors duration-300"
 
   async function handleInputChange (value: string) {
     if (value.trim() === '') {
@@ -96,96 +69,86 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
         break
     }
 
-
     const filteredData: DataItem[] | undefined = data?.data.filter(dataItem => props.lastItems.findIndex(item => item.id === dataItem.id) < 0)
     setAutocompleteItems(filteredData || [])
   }
 
   return (
-      <section className={`${baseClasses} ${themeStyles[theme]}`}>
-      <div className="relative w-full">
-        <label
-            htmlFor={props.id}
-            className={`block font-cinzel font-semibold mb-2 pl-2 transition-colors duration-300 ${labelStyles[theme]}`}
-        >
-          {props.label}
-        </label>
-
+      <div className="w-full relative">
         <Autocomplete
-          id={props.id}
-          value={null}
-          inputValue={input}
-          options={autocompleteItems}
-          getOptionLabel={(option) => option.attributes?.name || ''}
+            id={props.id}
+            value={null}
+            inputValue={input}
+            options={autocompleteItems}
+            getOptionLabel={(option) => option.attributes?.name || ''}
 
-          popupIcon={
-            <svg className={`fill-current h-5 w-5 ${iconStyles[theme]}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-            </svg>
-          }
-
-          slotProps={{
-            paper: {
-              className: `mt-2 rounded-xl shadow-lg border overflow-hidden ${dropdownStyles[theme]}`
+            popupIcon={
+              <svg className={`fill-current h-5 w-5 transition-colors ${iconStyles[theme]}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+              </svg>
             }
-          }}
-          renderOption={(props, option) => {
-            const { key, ...optionProps } = props
 
-            return (
-              <li
-                key={key}
-                {...optionProps}
-                className={`${optionProps.className || ''} flex items-center px-6 py-3 cursor-pointer transition-colors duration-200 border-b border-stone-100 last:border-b-0 ${listItemHoverStyles[theme]}`}
-              >
-                {option.attributes.image !== null && (
-                  <img
-                    src={option.attributes.image}
-                    className="h-10 w-auto object-contain drop-shadow-md rounded mr-2"
-                    referrerPolicy="no-referrer"
-                    crossOrigin="anonymous"
-                    alt={option.attributes.name + ' photo'}
-                  />
-                )}
-                {option.attributes.name}
-              </li>
-            )
-          }}
-          onChange={(_event, value) => {
-            if (value) {
-              handleAutocompleteSelect(value)
-            }
-          }}
+            slotProps={{
+              paper: {
+                className: "mt-2 rounded-xl shadow-lg border border-gray-100 bg-white overflow-hidden"
+              }
+            }}
 
-          onInputChange={async (_event, newInputValue, reason) => {
-            if (reason === 'input') {
-              setInput(newInputValue)
-              await handleInputChange(newInputValue)
-            }
-          }}
+            renderOption={(props, option) => {
+              const { key, ...optionProps } = props
+              return (
+                  <li
+                      key={key}
+                      {...optionProps}
+                      className={`${optionProps.className || ''} flex items-center px-6 py-3 cursor-pointer transition-colors duration-200 border-b border-gray-50 last:border-b-0 text-gray-700 font-medium ${listItemHoverStyles[theme]}`}
+                  >
+                    {option.attributes.image !== null && (
+                        <img
+                            src={option.attributes.image}
+                            className="h-8 w-8 object-cover rounded-full shadow-sm mr-4 border border-gray-200"
+                            referrerPolicy="no-referrer"
+                            crossOrigin="anonymous"
+                            alt={option.attributes.name + ' photo'}
+                        />
+                    )}
+                    {option.attributes.name}
+                  </li>
+              )
+            }}
 
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              placeholder={props.placeholder}
-              variant="outlined"
-              slotProps={{
-                ...params.slotProps,
-                input: {
-                  ...params.slotProps?.input,
-                  className: `w-full !rounded-full border shadow-inner transition-all duration-300 [&>fieldset]:border-0 ${inputStyles[theme]}`
-                },
-                htmlInput: {
-                  ...params.slotProps?.htmlInput,
-                  className: `${params.slotProps?.htmlInput?.className || ''} !py-3 !pl-6 !pr-2 text-left !bg-transparent placeholder-current`,
-                  'aria-label': props.label
-                }
-              }}
-            />
-          )}
+            onChange={(_event, value) => {
+              if (value) {
+                handleAutocompleteSelect(value)
+              }
+            }}
+
+            onInputChange={async (_event, newInputValue, reason) => {
+              if (reason === 'input') {
+                setInput(newInputValue)
+                await handleInputChange(newInputValue)
+              }
+            }}
+
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    placeholder={props.placeholder || props.label}
+                    variant="outlined"
+                    slotProps={{
+                      ...params.slotProps,
+                      input: {
+                        ...params.slotProps?.input,
+                        className: `w-full bg-white !rounded-xl border border-gray-300 shadow-sm transition-all duration-300 [&>fieldset]:border-0 focus-within:ring-2 focus-within:shadow-md ${inputRingStyles[theme]}`
+                      },
+                      htmlInput: {
+                        ...params.slotProps?.htmlInput,
+                        className: `${params.slotProps?.htmlInput?.className || ''} !py-2.5 !pl-5 !pr-4 text-left !bg-transparent !text-gray-900 font-medium text-base placeholder-gray-400`
+                      }
+                    }}
+                />
+            )}
         />
       </div>
-    </section>
   )
 }
 
