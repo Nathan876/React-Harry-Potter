@@ -1,6 +1,3 @@
-import type Character from '../interfaces/Character.tsx'
-import type Spell from '../interfaces/Spell.tsx'
-import type Potion from '../interfaces/Potion.tsx'
 import { useState } from 'react'
 import { getCharactersForAutocomplete } from '../services/CharacterService.tsx'
 import { getSpellsForAutocomplete } from '../services/SpellService.tsx'
@@ -15,7 +12,8 @@ interface PropsAutocomplete {
   id: string;
   placeholder?: string;
   type: string;
-  onSelect: (item: Character | Spell | Potion) => void;
+  onSelect: (item: DataItem) => void;
+  lastItems: DataItem[];
 }
 
 function AutocompleteDataItem (props: PropsAutocomplete) {
@@ -72,7 +70,7 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
 
 
   function handleAutocompleteSelect (item: DataItem) {
-    props.onSelect(item.attributes)
+    props.onSelect(item)
     setAutocompleteItems([])
     setInput('')
   }
@@ -97,7 +95,10 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
         data = await getCharactersForAutocomplete(value)
         break
     }
-    setAutocompleteItems(data?.data || [])
+
+
+    const filteredData: DataItem[] | undefined = data?.data.filter(dataItem => props.lastItems.findIndex(item => item.id === dataItem.id) < 0)
+    setAutocompleteItems(filteredData || [])
   }
 
   return (
@@ -156,9 +157,11 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
             }
           }}
 
-          onInputChange={async (_event, newInputValue) => {
-            setInput(newInputValue)
-            await handleInputChange(newInputValue)
+          onInputChange={async (_event, newInputValue, reason) => {
+            if (reason === 'input') {
+              setInput(newInputValue)
+              await handleInputChange(newInputValue)
+            }
           }}
 
           renderInput={(params) => (

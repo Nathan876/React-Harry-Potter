@@ -11,13 +11,14 @@ import {useTheme} from "../hooks/useTheme.tsx";
 import type {Theme} from "../contexts/ThemeContext.tsx";
 import type Potion from '../interfaces/Potion.tsx'
 import type Spell from '../interfaces/Spell.tsx'
+import type DataItem from '../interfaces/DataItem.tsx'
 
 export function CharacterGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
   const { dailyCharacter, isLoading, error } = useDailyCharacter(new Date(dateSelected))
-  const [lastCharacters, setLastCharacters] = useLocalStorage<Character[]>('hp-character-history', [])
+  const [lastCharacters, setLastCharacters] = useLocalStorage<DataItem[]>('hp-character-history', [])
   const lastCharacter = lastCharacters.length > 0 ? lastCharacters[lastCharacters.length - 1] : null
-  const currentCharacter = dailyCharacter?.attributes as Character | undefined
+  const currentCharacter = dailyCharacter as DataItem | undefined
 
   const {theme} = useTheme()
 
@@ -34,10 +35,10 @@ export function CharacterGame () {
   const isVictory = Boolean(
     lastCharacter &&
     currentCharacter &&
-    lastCharacter.name === currentCharacter.name
+    lastCharacter?.attributes?.name === currentCharacter?.attributes?.name
   )
 
-  async function handleSelecteCharacter (character: Character) {
+  async function handleSelecteCharacter (character: DataItem) {
     console.log('Personnage du jour :', dailyCharacter)
     console.log('Personnage selectionner ', character)
     setLastCharacters(prev => [...prev, character])
@@ -58,6 +59,7 @@ export function CharacterGame () {
                   id="search"
                   type="character"
                   onSelect={(character: Character | Potion | Spell)  => handleSelecteCharacter(character as Character)}
+                  lastItems={lastCharacters}
               />
           ) : (
               <div

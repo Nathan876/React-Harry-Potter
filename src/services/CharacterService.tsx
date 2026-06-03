@@ -1,17 +1,18 @@
 import type ResponseListApi from '../interfaces/ResponseListApi.tsx'
 
 
-const excludedNames = ["unidentified", "girl", "boy", "tournament", "champion", "spectator", "quidditch"];
+const excludedNames = ['unidentified', 'girl', 'boy', 'tournament', 'champion', 'spectator', 'quidditch', 'mother', 'father']
 
 const excludeNamesParams = excludedNames
 .map(word => `filter[name_not_cont_all][]=${word}`)
-.join("&");
+.join('&')
 
 const defaultFilter =
   '?filter[born_not_null]=true' +
   '&filter[species_not_null]=true' +
   '&filter[gender_not_null]=true' +
-  '&filter[blood_status_not_null]=true&' +
+  '&filter[blood_status_not_null]=true' +
+  '&filter[nationality_not_null]=true&' +
   excludeNamesParams
 
 export const url = 'https://api.potterdb.com/v1/characters'
@@ -27,6 +28,6 @@ export async function getDailyCharacter (index: number): Promise<ResponseListApi
 }
 
 export async function getCharactersForAutocomplete (query: string): Promise<ResponseListApi> {
-  const res = await fetch(url + `${defaultFilter}&filter[name_start]=${query}&page[size]=10`)
+  const res = await fetch(url + `${defaultFilter}&filter[name_start]=${query}`)
   return await res.json()
 }

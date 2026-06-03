@@ -11,14 +11,15 @@ import type Character from '../interfaces/Character.tsx'
 import type Spell from '../interfaces/Spell.tsx'
 import {useTheme} from "../hooks/useTheme.tsx";
 import type {Theme} from "../contexts/ThemeContext.tsx";
+import type DataItem from '../interfaces/DataItem.tsx'
 
 
 export function PotionGame () {
   const [dateSelected, setDateSelected] = useState<string>(convertDate(new Date()))
   const { dailyPotion, isLoading, error } = useDailyPotion(new Date(dateSelected))
-  const [lastPotions, setLastPotions] = useLocalStorage<Potion []>('hp-potion-history', [])
+  const [lastPotions, setLastPotions] = useLocalStorage<DataItem []>('hp-potion-history', [])
   const lastPotion = lastPotions.length > 0 ? lastPotions[lastPotions.length - 1] : null
-  const currentPotion = dailyPotion?.attributes as Potion | undefined
+  const currentPotion = dailyPotion
 
   const {theme} = useTheme()
 
@@ -35,10 +36,10 @@ export function PotionGame () {
   const isVictory = Boolean(
     lastPotion &&
     currentPotion &&
-    lastPotion.name === currentPotion.name
+    lastPotion?.attributes.name === currentPotion?.attributes.name
   )
 
-  async function handleSelectePotion (potion: Potion) {
+  async function handleSelectePotion (potion: DataItem) {
     setLastPotions(prev => [...prev, potion])
   }
 
