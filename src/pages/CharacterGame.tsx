@@ -9,8 +9,6 @@ import {useLocalStorage} from "../hooks/useLocalStorage.tsx";
 import Button from '../components/Button.tsx'
 import {useTheme} from "../hooks/useTheme.tsx";
 import type {Theme} from "../contexts/ThemeContext.tsx";
-import type Potion from '../interfaces/Potion.tsx'
-import type Spell from '../interfaces/Spell.tsx'
 import type DataItem from '../interfaces/DataItem.tsx'
 
 export function CharacterGame () {
@@ -58,7 +56,7 @@ export function CharacterGame () {
                   label="Search a wizard"
                   id="search"
                   type="character"
-                  onSelect={(character: Character | Potion | Spell)  => handleSelecteCharacter(character as Character)}
+                  onSelect={(character: DataItem)  => handleSelecteCharacter(character)}
                   lastItems={lastCharacters}
               />
           ) : (
@@ -66,7 +64,7 @@ export function CharacterGame () {
                   className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
                 <h2 className="text-4xl font-bold text-black mb-4">Victoire !</h2>
                 <p className="text-black text-lg">
-                  Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
+                  Bravo ! Tu as trouvé <strong>{currentCharacter?.attributes?.name}</strong>
                 </p>
                 <Button type="button" onClick={() => setLastCharacters([])}>
                   Replay?
@@ -89,7 +87,7 @@ export function CharacterGame () {
       <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character}></HelperCharacter>
 
       {lastCharacters?.length > 0 && (
-        <ComparatorCharacter lastCharacters={lastCharacters.toReversed()}
+        <ComparatorCharacter lastCharacters={lastCharacters.toReversed().map(item => item.attributes as Character)}
                              currentCharacter={dailyCharacter?.attributes as Character}></ComparatorCharacter>
       )}
 

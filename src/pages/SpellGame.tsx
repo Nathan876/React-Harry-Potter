@@ -66,7 +66,7 @@ export function SpellGame () {
                   className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
                 <h2 className="text-4xl font-bold text-black mb-4">Victoire !</h2>
                 <p className="text-black text-lg">
-                  Bravo ! Tu as trouvé <strong>{currentSpell?.name}</strong>
+                  Bravo ! Tu as trouvé <strong>{currentSpell?.attributes?.name}</strong>
                 </p>
                 <Button type="button" onClick={() => setLastSpells([])}>
                   Replay?
@@ -92,7 +92,7 @@ export function SpellGame () {
 
       {lastSpells?.length > 0 && (
           <ComparatorSpell
-              lastSpells={lastSpells.toReversed()}
+              lastSpells={lastSpells.toReversed().map(item=> item.attributes as Spell)}
               currentSpell={dailySpell?.attributes as Spell}
           />
       )}

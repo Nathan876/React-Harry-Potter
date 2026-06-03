@@ -7,8 +7,6 @@ import { useLocalStorage } from '../hooks/useLocalStorage.tsx'
 import { type ChangeEvent, useState } from 'react'
 import { convertDate } from '../utils/dateUtils.ts'
 import Button from '../components/Button.tsx'
-import type Character from '../interfaces/Character.tsx'
-import type Spell from '../interfaces/Spell.tsx'
 import {useTheme} from "../hooks/useTheme.tsx";
 import type {Theme} from "../contexts/ThemeContext.tsx";
 import type DataItem from '../interfaces/DataItem.tsx'
@@ -57,14 +55,15 @@ export function PotionGame () {
                   label="Search a potion"
                   id="search"
                   type="potion"
-                  onSelect={(potion:  Character | Potion | Spell) => handleSelectePotion(potion as Potion)}
+                  onSelect={(potion:  DataItem) => handleSelectePotion(potion)}
+                  lastItems={lastPotions}
               />
           ) : (
               <div
                   className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
                 <h2 className="text-4xl font-bold text-black mb-4">Victoire !</h2>
                 <p className="text-black text-lg">
-                  Bravo ! Tu as trouvé <strong>{currentPotion?.name}</strong>
+                  Bravo ! Tu as trouvé <strong>{currentPotion?.attributes?.name}</strong>
                 </p>
                 <Button type="button" onClick={() => setLastPotions([])}>
                   Replay?
@@ -90,7 +89,7 @@ export function PotionGame () {
 
       {lastPotions?.length > 0 && (
           <ComparatorPotion
-              lastPotions={lastPotions.toReversed()}
+              lastPotions={lastPotions.toReversed().map(item => item.attributes as Potion)}
               dailyPotion={dailyPotion?.attributes as Potion}
           />
       )}
