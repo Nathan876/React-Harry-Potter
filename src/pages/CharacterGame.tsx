@@ -54,7 +54,7 @@ export function CharacterGame () {
         <div className="w-1/3 text-left">
           {!isVictory ? (
               <AutocompleteDataItem
-                  aria-label="Search a wizard"
+                  label="Search a wizard"
                   id="search"
                   type="character"
                   onSelect={(character: Character | Potion | Spell)  => handleSelecteCharacter(character as Character)}
@@ -62,8 +62,8 @@ export function CharacterGame () {
           ) : (
               <div
                   className="my-8 p-6 bg-green-100 border-2 border-green-500 rounded-2xl text-center shadow-lg transform transition-all">
-                <h2 className="text-4xl font-bold text-green-700 mb-4">Victoire !</h2>
-                <p className="text-green-800 text-lg">
+                <h2 className="text-4xl font-bold text-black mb-4">Victoire !</h2>
+                <p className="text-black text-lg">
                   Bravo ! Tu as trouvé <strong>{currentCharacter?.name}</strong>
                 </p>
                 <Button type="button" onClick={() => setLastCharacters([])}>
@@ -82,7 +82,6 @@ export function CharacterGame () {
               </p>
           )}
           <input type={'date'} max={convertDate(new Date())} value={dateSelected} onChange={(e) => onChangeDate(e)}/>
-
         </div>
       </div>
       <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character}></HelperCharacter>

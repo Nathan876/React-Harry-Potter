@@ -167,15 +167,15 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
               placeholder={props.placeholder}
               variant="outlined"
               slotProps={{
-                ...params.slotProps?.input,
+                ...params.slotProps,
                 input: {
                   ...params.slotProps?.input,
-                  disableUnderline: true,
                   className: `w-full !rounded-full border shadow-inner transition-all duration-300 [&>fieldset]:border-0 ${inputStyles[theme]}`
                 },
                 htmlInput: {
                   ...params.slotProps?.htmlInput,
-                  className: `${params.slotProps?.htmlInput?.className || ''} !py-3 !pl-6 !pr-2 text-left !bg-transparent placeholder-current`
+                  className: `${params.slotProps?.htmlInput?.className || ''} !py-3 !pl-6 !pr-2 text-left !bg-transparent placeholder-current`,
+                  'aria-label': props.label
                 }
               }}
             />
