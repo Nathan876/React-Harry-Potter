@@ -87,7 +87,7 @@ export function CharacterGame () {
           </div>
 
           <div className="block lg:hidden w-full relative z-10">
-            <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character} />
+            <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character} tryCount={lastCharacters.length} />
           </div>
 
           {lastCharacters?.length > 0 && (
@@ -111,7 +111,7 @@ export function CharacterGame () {
         </div>
 
         <div className="fixed bottom-8 left-8 w-80 z-50 hidden lg:block">
-          <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character} />
+          <HelperCharacter currentCharacter={dailyCharacter?.attributes as Character} tryCount={lastCharacters.length}/>
         </div>
 
       </div>
