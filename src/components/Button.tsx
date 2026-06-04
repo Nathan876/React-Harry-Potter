@@ -1,5 +1,5 @@
 import {useTheme} from "../hooks/useTheme.tsx";
-import type {Theme} from "../contexts/ThemeContext.tsx"; // Optionnel, mais recommandé pour typer l'objet
+import type {Theme} from "../contexts/ThemeContext.tsx";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;

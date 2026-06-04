@@ -1,7 +1,8 @@
 import type Spell from '../../interfaces/Spell.tsx'
+import React from "react";
 
 interface PropsComparatorSpell {
-  lastSpell: Spell
+  lastSpells: Spell[]
   currentSpell: Spell
 }
 
@@ -14,31 +15,41 @@ function ComparatorSpell (props: PropsComparatorSpell) {
   }
   return (
     <div
-      className="flex flex-col items-center bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-4xl mx-auto my-4">
-      <h2 className="flex items-center justify-center text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-indigo-100 w-full text-center">
-        {props.lastSpell.image !== null &&
-          (<img src={props.lastSpell.image} className="h-10  w-auto object-contain drop-shadow-md rounded" alt={props.lastSpell?.name + 'photo'}/>
-          )}
-        {props.lastSpell?.name}
-      </h2>
+      className="flex flex-col items-center bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-6xl mx-auto my-4">
 
-      <div className="grid grid-cols-3 gap-x-4 gap-y-3 w-full text-center items-center">
+      <div className="grid grid-cols-4 gap-x-4 gap-y-3 w-full text-center items-center">
+        <div className={headerClass}>Name</div>
         <div className={headerClass}>Category</div>
         <div className={headerClass}>Light</div>
         <div className={headerClass}>Creator</div>
-
-        <div
-          className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentSpell?.category, props.lastSpell?.category)}`}>
-          {props.lastSpell?.category || '-'}
-        </div>
-        <div
-          className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentSpell?.light, props.lastSpell?.light)}`}>
-          {props.lastSpell?.light || '-'}
-        </div>
-        <div
-          className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentSpell?.creator, props.lastSpell?.creator)}`}>
-          {props.lastSpell?.creator || '-'}
-        </div>
+        {props.lastSpells.map((spell, index) => (
+            <React.Fragment key={`${spell.id || spell.name}-${index}`}>
+              <div className="flex items-center justify-start text-left gap-2 text-sm font-bold text-gray-800 w-full">
+                {spell.image !== null && (
+                    <img
+                        src={spell.image}
+                        referrerPolicy="no-referrer"
+                        crossOrigin="anonymous"
+                        className="h-10 w-auto object-contain drop-shadow-md rounded"
+                        alt={spell?.name + ' photo'}
+                    />
+                )}
+                <span>{spell?.name}</span>
+              </div>
+              <div
+                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentSpell?.category, spell?.category)}`}>
+                {spell?.category || '-'}
+              </div>
+              <div
+                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentSpell?.light, spell?.light)}`}>
+                {spell?.light || '-'}
+              </div>
+              <div
+                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentSpell?.creator, spell?.creator)}`}>
+                {spell?.creator || '-'}
+              </div>
+            </React.Fragment>
+        ))}
       </div>
     </div>)
 }

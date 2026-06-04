@@ -1,14 +1,27 @@
 import type Character from '../../interfaces/Character.tsx'
 import Button from '../Button.tsx'
 import { useEffect, useState } from 'react'
+import { useTheme } from '../../hooks/useTheme.tsx'
+import type { Theme } from '../../contexts/ThemeContext.tsx'
 
 interface PropsHelperCharacter {
   currentCharacter: Character
+  tryCount: number
 }
 
 function HelperCharacter (props: PropsHelperCharacter) {
   const [helper, setHelper] = useState<string[]>([])
   const [helpIndex, setHelpIndex] = useState(0)
+  const { theme } = useTheme()
+  const unlockedHints = Math.floor(props.tryCount / 3)
+
+  const hintBgStyles: Record<Theme, string> = {
+    Gryffindor: 'bg-red-50 text-red-950',
+    Slytherin: 'bg-emerald-50 text-emerald-950',
+    Ravenclaw: 'bg-blue-50 text-blue-950',
+    Hufflepuff: 'bg-yellow-50 text-yellow-950',
+    Accessible: 'bg-gray-100 text-black'
+  }
 
   useEffect(() => {
     const titles = props.currentCharacter?.titles ?? []
@@ -18,72 +31,53 @@ function HelperCharacter (props: PropsHelperCharacter) {
 
     const initHelper: string[] = []
 
-    if (jobs.length > 0) {
-      const randomIndex = Math.floor(Math.random() * jobs.length)
-      initHelper.push('Job: ' + jobs[randomIndex])
-    }
-
-    if (titles.length > 0) {
-      const randomIndex = Math.floor(Math.random() * titles.length)
-      initHelper.push('Title: ' + titles[randomIndex])
-    }
-
-    if (romance.length > 0) {
-      const randomIndex = Math.floor(Math.random() * romance.length)
-      initHelper.push('Romance: ' + romance[randomIndex])
-    }
-
-    if (familyMembers.length > 0) {
-      const randomIndex = Math.floor(Math.random() * familyMembers.length)
-      initHelper.push('A family member: ' + familyMembers[randomIndex])
-    }
-
-    if (props.currentCharacter?.born !== null) {
-      initHelper.push('Born: ' + props.currentCharacter?.born)
-    }
+    if (jobs.length > 0) initHelper.push('💼 Job: ' + jobs[Math.floor(Math.random() * jobs.length)])
+    if (titles.length > 0) initHelper.push('👑 Title: ' + titles[Math.floor(Math.random() * titles.length)])
+    if (romance.length > 0) initHelper.push('❤️ Romance: ' + romance[Math.floor(Math.random() * romance.length)])
+    if (familyMembers.length > 0) initHelper.push('🩸 Family: ' + familyMembers[Math.floor(Math.random() * familyMembers.length)])
+    if (props.currentCharacter?.born !== null) initHelper.push('📅 Born: ' + props.currentCharacter?.born)
 
     setHelper(initHelper)
     setHelpIndex(0)
   }, [props.currentCharacter])
 
+  if (helper.length === 0) return null
+
   return (
     <div
-      className="w-full mx-auto p-4 bg-[#fdfaf1] border-2  border-amber-900/30 rounded-xl shadow-2xl font-serif relative overflow-hidden">
-      <div className="relative z-10 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <Button
-            type="button"
-            disabled={helpIndex >= helper.length}
-            onClick={() => setHelpIndex(helpIndex + 1)}
-          >
-            <span className="text-lg">✨</span>
-            Cast <span className="font-bold text-amber-100 group-hover:text-white">Revelio</span>! 🪄
-          </Button>
-
-          <div
-            className="flex items-center text-right bg-amber-100 text-amber-950 px-2 py-1 rounded border border-amber-200 shadow-inner">
-            <div className="text-3xl font-black tabular-nums">
-              {helpIndex} <span className="text-xl text-amber-700">/ {helper.length}</span>
-            </div>
-          </div>
-        </div>
-
-        {helpIndex > 0 && (
-          <ul className="flex flex-col gap-2 m-0 p-0">
-            {helper.slice(0, helpIndex).map((hint, i) => (
-              <li
-                key={`${hint}-${i}`}
-                className="flex items-center gap-4 p-2 text-base leading-relaxed text-amber-950 bg-white/60 border border-amber-100 rounded-lg shadow-lg animate-fade-in-down"
-                style={{ animationDelay: `${i * 100}ms` }}
-              >
-                <span className="text-amber-500 text-2xl mt-0.5">⭐</span>
-
-                <span className="italic">{hint}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+      className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border-2 border-gray-100/50 w-full transition-all">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-xl font-cinzel font-bold text-gray-900">Magical Hints</h3>
+        <span className="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold text-gray-600 shadow-inner">
+          {helpIndex} / {helper.length}
+        </span>
       </div>
+
+      {unlockedHints > helpIndex && helpIndex < helper.length && (
+        <Button
+          type="button"
+          disabled={helpIndex >= helper.length}
+          onClick={() => setHelpIndex(helpIndex + 1)}
+          className="w-full text-sm py-2.5 mb-6"
+        >
+          {helpIndex === 0 ? 'Reveal first hint' : 'Get another hint'}
+        </Button>
+      )}
+      {!(unlockedHints > helpIndex && helpIndex < helper.length) && helpIndex !== helper.length && (
+        <span>Next hint in {3 - (props.tryCount % 3)} try</span>
+      )}
+      {helpIndex > 0 && (
+        <ul className="flex flex-col gap-3">
+          {helper.slice(0, helpIndex).map((hint, i) => (
+            <li
+              key={`${hint}-${i}`}
+              className={`px-4 py-3 rounded-xl text-sm font-medium border border-transparent shadow-sm animate-in slide-in-from-top-2 duration-300 ${hintBgStyles[theme]}`}
+            >
+              {hint}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
