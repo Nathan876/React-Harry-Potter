@@ -86,7 +86,7 @@ export function PotionGame () {
           </div>
 
           <div className="block lg:hidden w-full relative z-10">
-            <HelperPotion currentPotion={dailyPotion?.attributes as Potion} />
+            <HelperPotion currentPotion={dailyPotion?.attributes as Potion} tryCount={lastPotions?.length} />
           </div>
 
           {lastPotions?.length > 0 && (
@@ -110,7 +110,7 @@ export function PotionGame () {
         </div>
 
         <div className="fixed bottom-8 left-8 w-80 z-50 hidden lg:block">
-          <HelperPotion currentPotion={dailyPotion?.attributes as Potion} />
+          <HelperPotion currentPotion={dailyPotion?.attributes as Potion} tryCount={lastPotions?.length} />
         </div>
 
       </div>
