@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import type Potion from '../../interfaces/Potion.tsx'
 
 interface PropsComparatorPotion {
@@ -50,42 +50,42 @@ function ComparatorPotion (props: PropsComparatorPotion) {
         <div className={headerClass}>Manufacturers</div>
 
         {props.lastPotions.map((potion, index) => (
-            <React.Fragment key={`${potion.id || potion.name}-${index}`}>
+          <React.Fragment key={`${potion.id || potion.name}-${index}`}>
 
-              <div className="flex items-center justify-start text-left gap-2 text-sm font-bold text-gray-800 w-full">
-                {potion.image !== null && (
-                    <img
-                        src={potion.image}
-                        referrerPolicy="no-referrer"
-                        crossOrigin="anonymous"
-                        className="h-10 w-auto object-contain drop-shadow-md rounded"
-                        alt={potion?.name + ' photo'}
-                    />
-                )}
-                <span>{potion?.name}</span>
-              </div>
+            <div className="flex items-center justify-start text-left gap-2 text-sm font-bold text-gray-800 w-full">
+              {potion.image !== null && (
+                <img
+                  src={potion.image}
+                  referrerPolicy="no-referrer"
+                  crossOrigin="anonymous"
+                  className="h-10 w-auto object-contain drop-shadow-md rounded"
+                  alt={potion?.name + ' photo'}
+                />
+              )}
+              <span>{potion?.name}</span>
+            </div>
 
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClassForIngredients(props.dailyPotion?.ingredients, potion?.ingredients)}`}>
-                {potion?.ingredients || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.dailyPotion?.difficulty, potion?.difficulty)}`}>
-                {potion?.difficulty || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.dailyPotion?.time, potion?.time)}`}>
-                {potion?.time || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.dailyPotion?.inventors, potion?.inventors)}`}>
-                {potion?.inventors || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.dailyPotion?.manufacturers, potion?.manufacturers)}`}>
-                {potion?.manufacturers || '-'}
-              </div>
-            </React.Fragment>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClassForIngredients(props.dailyPotion?.ingredients, potion?.ingredients)}`}>
+              {potion?.ingredients || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.dailyPotion?.difficulty, potion?.difficulty)}`}>
+              {potion?.difficulty || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.dailyPotion?.time, potion?.time)}`}>
+              {potion?.time || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.dailyPotion?.inventors, potion?.inventors)}`}>
+              {potion?.inventors || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.dailyPotion?.manufacturers, potion?.manufacturers)}`}>
+              {potion?.manufacturers || '-'}
+            </div>
+          </React.Fragment>
         ))}
       </div>
     </div>)
