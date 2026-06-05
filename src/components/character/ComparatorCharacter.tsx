@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import type Character from '../../interfaces/Character.tsx'
 
 interface PropsComparatorCharacter {
@@ -28,41 +28,43 @@ function ComparatorCharacter (props: PropsComparatorCharacter) {
         <div className={headerClass}>Patronus</div>
 
         {props.lastCharacters.map((char, index) => (
-            <React.Fragment key={`${char.id || char.name}-${index}`}>
-              <div className="flex items-center justify-start text-left gap-2 text-sm font-bold text-gray-800 w-full">
-                {char.image !== null && (<img src={char.image} referrerPolicy="no-referrer" crossOrigin="anonymous" className="h-10 w-auto object-contain drop-shadow-md rounded" alt={char?.name + ' photo'}/>)}
-                <span>{char?.name}</span>
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.gender, char?.gender)}`}>
-                {char?.gender || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.hair_color, char?.hair_color)}`}>
-                {char?.hair_color || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.species, char?.species)}`}>
-                {char?.species || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.blood_status, char?.blood_status)}`}>
-                {char?.blood_status || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.house, char?.house)}`}>
-                {char?.house || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.nationality, char?.nationality)}`}>
-                {char?.nationality || '-'}
-              </div>
-              <div
-                className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.patronus, char?.patronus)}`}>
-                {char?.patronus || '-'}
-              </div>
-            </React.Fragment>
-            ))}
+          <React.Fragment key={`${char.id || char.name}-${index}`}>
+            <div className="flex items-center justify-start text-left gap-2 text-sm font-bold text-gray-800 w-full">
+              {char.image !== null && (<img src={char.image} referrerPolicy="no-referrer" crossOrigin="anonymous"
+                                            className="h-10 w-auto object-contain drop-shadow-md rounded"
+                                            alt={char?.name + ' photo'}/>)}
+              <span>{char?.name}</span>
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.gender, char?.gender)}`}>
+              {char?.gender || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.hair_color, char?.hair_color)}`}>
+              {char?.hair_color || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.species, char?.species)}`}>
+              {char?.species || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.blood_status, char?.blood_status)}`}>
+              {char?.blood_status || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.house, char?.house)}`}>
+              {char?.house || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.nationality, char?.nationality)}`}>
+              {char?.nationality || '-'}
+            </div>
+            <div
+              className={`p-2 rounded-lg border font-medium transition-colors ${getMatchClass(props.currentCharacter?.patronus, char?.patronus)}`}>
+              {char?.patronus || '-'}
+            </div>
+          </React.Fragment>
+        ))}
       </div>
     </div>
   )
