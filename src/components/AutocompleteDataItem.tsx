@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { getCharactersForAutocomplete } from '../services/CharacterService.tsx'
 import { getPotionsForAutocomplete } from '../services/PotionService.tsx'
-import { Autocomplete, TextField } from '@mui/material'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
+
 import type DataItem from '../interfaces/DataItem.tsx'
 import { useTheme } from '../hooks/useTheme.tsx'
 import type { Theme } from '../contexts/ThemeContext.tsx'
@@ -41,6 +43,11 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
     Ravenclaw: 'hover:bg-blue-50 hover:text-blue-900',
     Hufflepuff: 'hover:bg-yellow-50 hover:text-yellow-900',
     Accessible: 'hover:bg-gray-100 hover:text-black'
+  }
+
+  const getOptimizedImageUrl = (url: string) => {
+    if (!url) return ''
+    return `https://wsrv.nl/?url=${encodeURIComponent(url)}&h=64&output=webp`
   }
 
   function handleAutocompleteSelect (item: DataItem) {
@@ -102,7 +109,8 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
             >
               {option.attributes.image !== null && (
                 <img
-                  src={option.attributes.image}
+                  src={getOptimizedImageUrl(option.attributes.image)}
+                  loading="lazy"
                   className="h-8 w-8 object-cover rounded-full shadow-sm mr-4 border border-gray-200"
                   referrerPolicy="no-referrer"
                   crossOrigin="anonymous"

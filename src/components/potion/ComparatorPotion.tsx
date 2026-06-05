@@ -37,6 +37,11 @@ function ComparatorPotion (props: PropsComparatorPotion) {
       : 'bg-red-100 text-red-800 border-red-300'
   }
 
+  const getOptimizedImageUrl = (url: string) => {
+    if (!url) return ''
+    return `https://wsrv.nl/?url=${encodeURIComponent(url)}&h=80&output=webp`
+  }
+
   return (
     <div
       className="flex flex-col items-center bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-6xl mx-auto my-4">
@@ -55,7 +60,8 @@ function ComparatorPotion (props: PropsComparatorPotion) {
             <div className="flex items-center justify-start text-left gap-2 text-sm font-bold text-gray-800 w-full">
               {potion.image !== null && (
                 <img
-                  src={potion.image}
+                  src={getOptimizedImageUrl(potion.image)} // 🚀 URL optimisée
+                  loading="lazy"                           // 🚀 Lazy loading actif
                   referrerPolicy="no-referrer"
                   crossOrigin="anonymous"
                   className="h-10 w-auto object-contain drop-shadow-md rounded"

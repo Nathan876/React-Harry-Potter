@@ -13,6 +13,12 @@ function ComparatorCharacter (props: PropsComparatorCharacter) {
       ? 'bg-green-100 text-green-800 border-green-300'
       : 'bg-red-100 text-red-800 border-red-300'
   }
+
+  const getOptimizedImageUrl = (url: string) => {
+    if (!url) return ''
+    return `https://wsrv.nl/?url=${encodeURIComponent(url)}&h=80&output=webp`
+  }
+
   return (
     <div
       className="flex flex-col items-center bg-white p-6 rounded-2xl shadow-lg border border-gray-100 w-full max-w-6xl mx-auto my-4">
@@ -30,9 +36,16 @@ function ComparatorCharacter (props: PropsComparatorCharacter) {
         {props.lastCharacters.map((char, index) => (
           <React.Fragment key={`${char.id || char.name}-${index}`}>
             <div className="flex items-center justify-start text-left gap-2 text-sm font-bold text-gray-800 w-full">
-              {char.image !== null && (<img src={char.image} referrerPolicy="no-referrer" crossOrigin="anonymous"
-                                            className="h-10 w-auto object-contain drop-shadow-md rounded"
-                                            alt={char?.name + ' photo'}/>)}
+              {char.image !== null && (
+                <img
+                  src={getOptimizedImageUrl(char.image)}
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  crossOrigin="anonymous"
+                  className="h-10 w-auto object-contain drop-shadow-md rounded"
+                  alt={char?.name + ' photo'}
+                />
+              )}
               <span>{char?.name}</span>
             </div>
             <div

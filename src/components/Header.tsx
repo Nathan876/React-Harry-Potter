@@ -35,8 +35,10 @@ export default function Header () {
         </span>
       ) : (
         <img
-          src="/src/assets/Harry-Potter-Logo.png"
+          src="/Harry-Potter-Logo.webp"
           alt="logo harry potter"
+          fetchPriority="high"
+          loading="eager"
           className={`w-24 h-auto transition-all duration-300 ${logoStyles[theme]}`}
         />
       )}

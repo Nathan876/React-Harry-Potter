@@ -26,19 +26,26 @@ function App () {
   }
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 font-lora ${getThemeClasses()}`} style={{
-      backgroundImage: `url("/src/assets/background.jpg")`,
-      backgroundSize: 'cover',
-      backgroundAttachment: 'fixed'
-    }}>
-      <Header/>
-      <main className="p-4">
-        <Routes>
-          <Route path="/" element={<Navigate to="/character" replace/>}/>
-          <Route path="/character" element={<CharacterGame/>}/>
-          <Route path="/potion" element={<PotionGame/>}/>
-        </Routes>
-      </main>
+    <div className={`relative min-h-screen transition-colors duration-300 font-lora ${getThemeClasses()}`}>
+
+      <img
+        src="/background.webp"
+        alt=""
+        fetchPriority="high"
+        loading="eager"
+        className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
+      />
+
+      <div className="relative z-10">
+        <Header/>
+        <main className="p-4">
+          <Routes>
+            <Route path="/" element={<Navigate to="/character" replace/>}/>
+            <Route path="/character" element={<CharacterGame/>}/>
+            <Route path="/potion" element={<PotionGame/>}/>
+          </Routes>
+        </main>
+      </div>
     </div>
   )
 }
