@@ -144,8 +144,7 @@ function AutocompleteDataItem (props: PropsAutocomplete) {
               ...params.slotProps,
               input: {
                 ...params.slotProps?.input,
-                className: `w-full bg-white !rounded-xl border border-gray-300 shadow-sm transition-all duration-300 [&>fieldset]:border-0 focus-within:ring-2 focus-within:shadow-md ${inputRingStyles[theme]}`
-              },
+                className: `w-full bg-white !rounded-xl border border-gray-300 shadow-sm transition-all duration-300 focus-within:ring-2 focus-within:shadow-md ${inputRingStyles[theme]} [&>fieldset]:!border-0 focus-within:[&>fieldset]:!border-0`              },
               htmlInput: {
                 ...params.slotProps?.htmlInput,
                 className: `${params.slotProps?.htmlInput?.className || ''} !py-2.5 !pl-5 !pr-4 text-left !bg-transparent !text-gray-900 font-medium text-base placeholder-gray-400`
