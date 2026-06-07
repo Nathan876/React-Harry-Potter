@@ -2,6 +2,7 @@
 
 > Un jeu de devinettes inspiré de *"Un Jour Un Film"*, appliqué à l'univers d'Harry Potter.  
 > Chaque partie, une ressource mystère (personnage, potion ou sort) est tirée au sort — devinez-la grâce aux comparaisons de métadonnées !
+> **🚀 Jouer directement en ligne : [Lien vers la démo GitHub Pages](https://nathan876.github.io/React-Harry-Potter/)**
 
 ---
 
@@ -104,6 +105,12 @@ L'application sera disponible sur [http://localhost:5173](http://localhost:5173)
 
 ## 🎮 Utilisation
 
+### 🌐 Jouer en ligne
+Jouez directement ici :
+👉 https://nathan876.github.io/React-Harry-Potter/
+
+### 💻 Utilisation en local
+
 1. Ouvrir l'application sur http://localhost:5173
 2. Une ressource mystère est automatiquement tirée au sort
 3. Taper le nom d'un personnage / potion / sort dans le champ de recherche
@@ -114,4 +121,8 @@ L'application sera disponible sur [http://localhost:5173](http://localhost:5173)
 
 ## 📄 Licence
 
-Projet réalisé dans le cadre de la formation **Coda_**.
+Ce projet est sous licence **MIT**. Vous êtes libre de l'utiliser, de le modifier et de le distribuer, tant que vous incluez la mention de copyright originale.
+
+Copyright (c) 2026 Cecile FISCHER & Nathan CHABALIER
+
+Pour plus de détails, veuillez consulter le fichier [LICENSE](LICENSE) à la racine du dépôt.
