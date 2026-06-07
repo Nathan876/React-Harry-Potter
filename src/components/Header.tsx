@@ -35,7 +35,7 @@ export default function Header () {
         </span>
       ) : (
         <img
-          src="/Harry-Potter-Logo.webp"
+          src="Harry-Potter-Logo.webp"
           alt="logo harry potter"
           fetchPriority="high"
           loading="eager"
