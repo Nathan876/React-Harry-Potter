@@ -29,7 +29,7 @@ function App () {
     <div className={`relative min-h-screen transition-colors duration-300 font-lora ${getThemeClasses()}`}>
 
       <img
-        src="/background.webp"
+        src="background.webp"
         alt=""
         fetchPriority="high"
         loading="eager"
